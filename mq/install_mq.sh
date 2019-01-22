@@ -31,10 +31,13 @@ MQ_FILE=mqadv_dev911_linux_x86-64.tar.gz
 MQ_URL="https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/$MQ_FILE"
 
 #Check if /iibdata/mqadv_dev911_linux_x86-64.tar.gz exists, otherwise download it
-
-#Download MQ to /tmp/mq
-(cd /tmp/mq/ && curl -LO $MQ_URL)
-#curl -LO https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev911_linux_x86-64.tar.gz
+if [ -e "$DIR_EXTRACT/$MQ_FILE" ] then
+	echo $DIR_EXTRACT/$MQ_FILE exists, no download required
+else
+	#Download MQ to /tmp/mq
+	(cd /tmp/mq/ && curl -LO $MQ_URL)
+	#curl -LO https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev911_linux_x86-64.tar.gz
+fi
 
 #Extract MQ
 tar -zxvf /tmp/mq/$MQ_FILE -C /tmp/mq/ 2>&1 > /dev/null
@@ -77,7 +80,8 @@ mkdir -p /opt/mqm
 #rpm -Uivh /tmp/mq/MQServer/MQSeriesSamples-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/rpm.log
 #rpm -Uivh /tmp/mq/MQServer/MQSeriesSDK-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/rpm.log
 
-rpm -Uivh $DIR_RPM/$MQ_PACKAGES
+echo rpm -ivh $DIR_RPM/$MQ_PACKAGES
+rpm -ivh $DIR_RPM/$MQ_PACKAGES
 
 echo "Performing a Yum Update"
 yum -y update
@@ -99,20 +103,21 @@ yum -y clean all
 rm -rf /var/cache/yum/*
 
 # Clean up all the downloaded files
-rm -rf ${DIR_EXTRACT}
+#rm -rf ${DIR_EXTRACT}
 
-#Copy MQ Scripts
-#cp /iibdata/mq-scripts/*.sh /usr/local/bin/
-cp mq-scripts/*.sh /usr/local/bin/
-chmod 755 /usr/local/bin/*.sh
-#cp /iibdata/mq-scripts/mq-config /etc/mqm/mq-config
-cp mq-scripts/mq-config /etc/mqm/mq-config
-chmod 755 /etc/mqm/mq-config
-
-#cp /iibdata/mq-scripts/iibservice /etc/init.d/iibservice
-#cp mq-scripts/iibservice /etc/init.d/iibservice
-#chmod 755 /etc/init.d/iibservice
-
-#Update the Path
-export PATH=$PATH:/usr/local/bin/
-echo $PATH
+##Copy MQ Scripts
+#echo "Copy MQ Scripts"
+##cp /iibdata/mq-scripts/*.sh /usr/local/bin/
+#cp mq-scripts/*.sh /usr/local/bin/
+#chmod 755 /usr/local/bin/*.sh
+##cp /iibdata/mq-scripts/mq-config /etc/mqm/mq-config
+#cp mq-scripts/mq-config /etc/mqm/mq-config
+#chmod 755 /etc/mqm/mq-config
+#
+##cp /iibdata/mq-scripts/iibservice /etc/init.d/iibservice
+##cp mq-scripts/iibservice /etc/init.d/iibservice
+##chmod 755 /etc/init.d/iibservice
+#
+##Update the Path
+#export PATH=$PATH:/usr/local/bin/
+#echo $PATH
