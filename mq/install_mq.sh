@@ -31,9 +31,11 @@ MQ_FILE=mqadv_dev911_linux_x86-64.tar.gz
 MQ_URL="https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/$MQ_FILE"
 
 #Check if /iibdata/mqadv_dev911_linux_x86-64.tar.gz exists, otherwise download it
-if [ -e "$DIR_EXTRACT/$MQ_FILE" ] then
-	echo $DIR_EXTRACT/$MQ_FILE exists, no download required
+if [ -e "$DIR_EXTRACT/$MQ_FILE" ]
+then
+	echo "$DIR_EXTRACT/$MQ_FILE exists, no download required"
 else
+	echo "Downloading MQ to $DIR_EXTRACT"
 	#Download MQ to /tmp/mq
 	(cd /tmp/mq/ && curl -LO $MQ_URL)
 	#curl -LO https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev911_linux_x86-64.tar.gz
