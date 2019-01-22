@@ -80,9 +80,10 @@ chmod 755 /usr/local/bin/*.sh
 #cp /iibdata/mq-scripts/mq-config /etc/mqm/mq-config
 cp mq-scripts/mq-config /etc/mqm/mq-config
 chmod 755 /etc/mqm/mq-config
+
 #cp /iibdata/mq-scripts/iibservice /etc/init.d/iibservice
-cp mq-scripts/iibservice /etc/init.d/iibservice
-chmod 755 /etc/init.d/iibservice
+#cp mq-scripts/iibservice /etc/init.d/iibservice
+#chmod 755 /etc/init.d/iibservice
 
 #Update the Path
 export PATH=$PATH:/usr/local/bin/
