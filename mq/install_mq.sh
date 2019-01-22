@@ -48,9 +48,6 @@ useradd --system --uid 980 --gid mqm mqm
 usermod -G mqm root
 #usermod -aG mqm root
 
-# Install bc program
-yum install bc -y
-
 #MQ Packages to Install
 MQ_PACKAGES="MQSeriesRuntime-*.rpm MQSeriesServer-*.rpm MQSeriesJava*.rpm MQSeriesJRE*.rpm MQSeriesGSKit*.rpm MQSeriesMsg*.rpm MQSeriesSamples*.rpm MQSeriesAMS-*.rpm"
 
@@ -80,7 +77,7 @@ mkdir -p /opt/mqm
 #rpm -Uivh /tmp/mq/MQServer/MQSeriesSamples-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/rpm.log
 #rpm -Uivh /tmp/mq/MQServer/MQSeriesSDK-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/rpm.log
 
-cd $DIR_RPM && rpm -Uivh $MQ_PACKAGES
+rpm -Uivh $DIR_RPM/$MQ_PACKAGES
 
 echo "Performing a Yum Update"
 yum -y update
