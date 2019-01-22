@@ -84,5 +84,5 @@ license-check.sh
 mq_start.sh
 start_iib
 trap stop SIGTERM SIGINT
-#monitor
+monitor
 
