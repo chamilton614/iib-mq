@@ -3,6 +3,24 @@
 
 mkdir -p logs/mq/
 
+# Install additional packages required by MQ, this install process and the runtime scripts
+yum -y install \
+  bash \
+  bc \
+  ca-certificates \
+  coreutils \
+  curl \
+  file \
+  findutils \
+  gawk \
+  glibc-common \
+  grep \
+  passwd \
+  procps-ng \
+  sed \
+  tar \
+  util-linux
+
 # Download and extract the MQ installation files
 echo "exporting DIR_EXTRACT=/tmp/mq"
 export DIR_EXTRACT=/tmp/mq/
