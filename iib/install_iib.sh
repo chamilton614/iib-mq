@@ -4,7 +4,8 @@ mkdir -p /tmp/iib
 mkdir -p /opt/ibm
 #cd /opt/ibm
 
-IIB_URL="http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.15-IIB.LINUX64-DEVELOPER.tar.gz"
+IIB_FILE=10.0.0.15-IIB.LINUX64-DEVELOPER.tar.gz
+IIB_URL="http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/$IIB_FILE"
 
 #Check if /iibdata/10.0.0.15-IIB-LINUX64-DEVELOPER.tar.gz exists, otherwise download it
 

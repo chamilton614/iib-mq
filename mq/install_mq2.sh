@@ -2,7 +2,8 @@
 # Fail on any non-zero return code
 set -ex
 
-MQ_URL="https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev911_linux_x86-64.tar.gz"
+MQ_FILE=mqadv_dev911_linux_x86-64.tar.gz
+MQ_URL="https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/$MQ_FILE"
 
 test -f /usr/bin/yum && RHEL=true || RHEL=false
 test -f /usr/bin/apt-get && UBUNTU=true || UBUNTU=false
