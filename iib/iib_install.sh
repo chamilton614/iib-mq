@@ -1,16 +1,17 @@
 
 # Install IIB v10.0.0.x Developer edition
-
+mkdir -p /tmp/iib
 mkdir -p /opt/ibm
 #cd /opt/ibm
 
 #Check if /iibdata/10.0.0.15-IIB-LINUX64-DEVELOPER.tar.gz exists, otherwise download it
 
 #Download IIB
-curl -LO http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.15-IIB-LINUX64-DEVELOPER.tar.gz
+(cd /tmp/iib && curl -LO http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.15-IIB-LINUX64-DEVELOPER.tar.gz)
+#curl -LO http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.15-IIB-LINUX64-DEVELOPER.tar.gz
 
 #Extract IIB
-tar -Uzxvf 10.0.0.15-IIB-LINUX64-DEVELOPER.tar.gz -C /opt/ibm/ 2>&1 > /dev/null
+tar -Uzxvf /tmp/iib/10.0.0.15-IIB-LINUX64-DEVELOPER.tar.gz -C /opt/ibm/ 2>&1 > /dev/null
 
 #Extract IIB from /iibdata
 #tar -Uzxvf /iibdata/10.0.0.11-IIB-LINUX64-DEVELOPER.tar.gz -C /opt/ibm/ 2>&1 > /dev/null

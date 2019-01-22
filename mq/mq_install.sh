@@ -11,11 +11,12 @@ mkdir -p /tmp/mq
 
 #Check if /iibdata/mqadv_dev911_linux_x86-64.tar.gz exists, otherwise download it
 
-#Download MQ
-curl -LO https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev911_linux_x86-64.tar.gz
+#Download MQ to /tmp/mq
+(cd /tmp/mq && curl -LO https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev911_linux_x86-64.tar.gz)
+#curl -LO https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev911_linux_x86-64.tar.gz
 
 #Extract MQ
-tar -zxvf mqadv_dev911_linux_x86-64.tar.gz -C /tmp/mq 2>&1 > /dev/null
+tar -zxvf /tmp/mq/mqadv_dev911_linux_x86-64.tar.gz -C /tmp/mq 2>&1 > /dev/null
 
 #Extract MQ from /iibdata
 #tar -zxvf /iibdata/mqadv_dev911_linux_x86-64.tar.gz -C /tmp/mq 2>&1 > /dev/null
