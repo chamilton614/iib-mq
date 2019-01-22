@@ -9,10 +9,12 @@ export DIR_EXTRACT=/tmp/mq/
 mkdir -p /tmp/mq/
 #cd /tmp/mq
 
+MQ_URL="https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev911_linux_x86-64.tar.gz"
+
 #Check if /iibdata/mqadv_dev911_linux_x86-64.tar.gz exists, otherwise download it
 
 #Download MQ to /tmp/mq
-(cd /tmp/mq/ && curl -LO https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev911_linux_x86-64.tar.gz)
+(cd /tmp/mq/ && curl -LO $MQ_URL)
 #curl -LO https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev911_linux_x86-64.tar.gz
 
 #Extract MQ
