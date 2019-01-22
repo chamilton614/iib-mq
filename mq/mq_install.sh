@@ -1,22 +1,22 @@
 
 # Install MQ v9.1.1.x Developer edition
 
-mkdir logs/mq
+mkdir -p logs/mq/
 
 # Download and extract the MQ installation files
 echo "exporting DIR_EXTRACT=/tmp/mq"
-export DIR_EXTRACT=/tmp/mq
-mkdir -p /tmp/mq
+export DIR_EXTRACT=/tmp/mq/
+mkdir -p /tmp/mq/
 #cd /tmp/mq
 
 #Check if /iibdata/mqadv_dev911_linux_x86-64.tar.gz exists, otherwise download it
 
 #Download MQ to /tmp/mq
-(cd /tmp/mq && curl -LO https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev911_linux_x86-64.tar.gz)
+(cd /tmp/mq/ && curl -LO https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev911_linux_x86-64.tar.gz)
 #curl -LO https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev911_linux_x86-64.tar.gz
 
 #Extract MQ
-tar -zxvf /tmp/mq/mqadv_dev911_linux_x86-64.tar.gz -C /tmp/mq 2>&1 > /dev/null
+tar -zxvf /tmp/mq/mqadv_dev911_linux_x86-64.tar.gz -C /tmp/mq/ 2>&1 > /dev/null
 
 #Extract MQ from /iibdata
 #tar -zxvf /iibdata/mqadv_dev911_linux_x86-64.tar.gz -C /tmp/mq 2>&1 > /dev/null
@@ -25,6 +25,9 @@ tar -zxvf /tmp/mq/mqadv_dev911_linux_x86-64.tar.gz -C /tmp/mq 2>&1 > /dev/null
 groupadd --system --gid 980 mqm
 useradd --system --uid 980 --gid mqm mqm
 usermod -G mqm root
+
+# Install bc program
+yum install bc -y
 
 # Find directory containing .rpm files
 # export DIR_RPM=$(find ${DIR_EXTRACT} -name "*.rpm" -printf "%h\n" | sort -u | head -1)
@@ -37,30 +40,35 @@ echo $MQLICENSE
 ${MQLICENSE} -text_only -accept
 
 # Install MQ using the RPM packages
+echo "Installing the RPM Packages"
 mkdir -p /opt/mqm
 rpm -Uivh /tmp/mq/MQServer/MQSeriesRuntime-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/rpm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesJRE-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log 
-rpm -Uivh /tmp/mq/MQServer/MQSeriesJava-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesServer-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesWeb-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesExplorer-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesGSKit-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesClient-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesMan-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesMsg_es-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesSamples-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesSDK-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesJRE-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/rpm.log 
+rpm -Uivh /tmp/mq/MQServer/MQSeriesJava-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/rpm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesServer-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/rpm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesWeb-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/rpm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesExplorer-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/rpm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesGSKit-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/rpm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesClient-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/rpm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesMan-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/rpm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesMsg_es-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/rpm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesSamples-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/rpm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesSDK-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/rpm.log
 
+echo "Performing a Yum Update"
 yum -y update
 
 # Remove tar.gz files unpacked by RPM postinst scripts
-find /opt/mqm -name '*.tar.gz' -delete
+find /opt/mqm/ -name '*.tar.gz' -delete
 
 #Create /var/mqm
-mkdir -p /var/mqm
+mkdir -p /var/mqm/
+
+#Create /etc/mqm/
+mkdir -p /etc/mqm/
 
 # Recommended: Set the default MQ installation (makes the MQ commands available on the PATH)
-/opt/mqm/bin/setmqinst -p /opt/mqm -i
+/opt/mqm/bin/setmqinst -p /opt/mqm/ -i
 
 # Clean up all the downloaded files
 rm -rf ${DIR_EXTRACT}
@@ -77,5 +85,5 @@ cp mq-scripts/iibservice /etc/init.d/iibservice
 chmod 755 /etc/init.d/iibservice
 
 #Update the Path
-export PATH=$PATH:/usr/local/bin
+export PATH=$PATH:/usr/local/bin/
 echo $PATH
