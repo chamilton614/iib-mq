@@ -4,14 +4,16 @@ mkdir -p /tmp/iib
 mkdir -p /opt/ibm
 #cd /opt/ibm
 
+IIB_URL="http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.15-IIB.LINUX64-DEVELOPER.tar.gz"
+
 #Check if /iibdata/10.0.0.15-IIB-LINUX64-DEVELOPER.tar.gz exists, otherwise download it
 
 #Download IIB
-(cd /tmp/iib && curl -LO http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.15-IIB-LINUX64-DEVELOPER.tar.gz)
+(cd /tmp/iib && curl -LO $IIB_URL)
 #curl -LO http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.15-IIB-LINUX64-DEVELOPER.tar.gz
 
 #Extract IIB
-tar -Uzxvf /tmp/iib/10.0.0.15-IIB-LINUX64-DEVELOPER.tar.gz -C /opt/ibm/ 2>&1 > /dev/null
+tar -zxvf /tmp/iib/*.tar.gz -C /opt/ibm/ 2>&1 > /dev/null
 
 #Extract IIB from /iibdata
 #tar -Uzxvf /iibdata/10.0.0.11-IIB-LINUX64-DEVELOPER.tar.gz -C /opt/ibm/ 2>&1 > /dev/null
