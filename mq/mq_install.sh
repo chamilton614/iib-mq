@@ -1,6 +1,8 @@
 
 # Install MQ v9.1.1.x Developer edition
 
+mkdir logs/mq
+
 # Download and extract the MQ installation files
 echo "exporting DIR_EXTRACT=/tmp/mq"
 export DIR_EXTRACT=/tmp/mq
@@ -34,19 +36,19 @@ echo $MQLICENSE
 ${MQLICENSE} -text_only -accept
 
 # Install MQ using the RPM packages
-mkdir /opt/mqm
-rpm -Uivh /tmp/mq/MQServer/MQSeriesRuntime-9.1.1-0.x86_64.rpm 2>&1 >> /iib/logs/rpm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesJRE-9.1.1-0.x86_64.rpm 2>&1 >> /iib/logs/prm.log 
-rpm -Uivh /tmp/mq/MQServer/MQSeriesJava-9.1.1-0.x86_64.rpm 2>&1 >> /iib/logs/prm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesServer-9.1.1-0.x86_64.rpm 2>&1 >> /iib/logs/prm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesWeb-9.1.1-0.x86_64.rpm 2>&1 >> /iib/logs/prm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesExplorer-9.1.1-0.x86_64.rpm 2>&1 >> /iib/logs/prm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesGSKit-9.1.1-0.x86_64.rpm 2>&1 >> /iib/logs/prm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesClient-9.1.1-0.x86_64.rpm 2>&1 >> /iib/logs/prm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesMan-9.1.1-0.x86_64.rpm 2>&1 >> /iib/logs/prm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesMsg_es-9.1.1-0.x86_64.rpm 2>&1 >> /iib/logs/prm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesSamples-9.1.1-0.x86_64.rpm 2>&1 >> /iib/logs/prm.log
-rpm -Uivh /tmp/mq/MQServer/MQSeriesSDK-9.1.1-0.x86_64.rpm 2>&1 >> /iib/logs/prm.log
+mkdir -p /opt/mqm
+rpm -Uivh /tmp/mq/MQServer/MQSeriesRuntime-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/rpm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesJRE-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log 
+rpm -Uivh /tmp/mq/MQServer/MQSeriesJava-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesServer-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesWeb-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesExplorer-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesGSKit-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesClient-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesMan-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesMsg_es-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesSamples-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
+rpm -Uivh /tmp/mq/MQServer/MQSeriesSDK-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/prm.log
 
 yum -y update
 
