@@ -13,7 +13,7 @@ IIB_URL="http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integrati
 #curl -LO http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.15-IIB-LINUX64-DEVELOPER.tar.gz
 
 #Extract IIB
-tar -zxvf /tmp/iib/*.tar.gz -C /opt/ibm/ 2>&1 > /dev/null
+tar -Uzxvf /tmp/iib/*.tar.gz -C /opt/ibm/ 2>&1 > /dev/null
 
 #Extract IIB from /iibdata
 #tar -Uzxvf /iibdata/10.0.0.11-IIB-LINUX64-DEVELOPER.tar.gz -C /opt/ibm/ 2>&1 > /dev/null
