@@ -14,6 +14,7 @@ groupadd -f mqclient
 #useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo,mqm,mqclient iibuser
 useradd iibuser
 usermod -aG mqbrkrs,mqm,mqclient,wheel iibuser
+usermod -aG mqbrkrs,mqclient root
 
 #Update the sudoers for iibuser
 sed -e 's/^%sudo	.*/%sudo	ALL=NOPASSWD:ALL/g' -i /etc/sudoers

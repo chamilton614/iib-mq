@@ -10,10 +10,10 @@ endmqm QM01
 mqsideletebroker IBNODE01
 dltmqm QM01
 
-#Cleanup IBNODE1 and QM1
-mqsistop IBNODE1
+#Cleanup IIBV10NODE1 and QM1
+mqsistop IIBV10NODE1
 endmqm QM1
-mqsideletebroker IBNODE1
+mqsideletebroker IIBV10NODE1
 dltmqm QM1
 
 #Kill User Processes
