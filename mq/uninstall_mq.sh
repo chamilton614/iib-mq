@@ -22,10 +22,18 @@ killall -9 -u mqm
 #Remove Users
 userdel --remove mqm
 
+#Remove root from mqm
+gpasswd -d root mqm
+
 #Remove Groups
 #groupdel mqbrkrs
 #groupdel mqclient
 groupdel mqm
+
+echo "Cleaning .bash_profile"
+sed -i '/export LICENSE=accept/d' /root/.bash_profile
+sed -i '/source \/opt\/mqm\/bin\/setmqenv -s/d' /root/.bash_profile
+sed -i 's/:\/opt\/mqm\/bin:\/opt\/mqm\/samp\/bin//g' /root/.bash_profile
 
 #Remove MQ Packages
 rpm -qa | grep MQSeries | xargs rpm -ev 2>&1 > /dev/null

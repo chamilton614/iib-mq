@@ -20,7 +20,10 @@ usermod -aG mqbrkrs,mqclient root
 echo -e "iibuser\niibuser" | passwd iibuser
 
 #Update the sudoers for iibuser
-sed -e 's/^%sudo	.*/%sudo	ALL=NOPASSWD:ALL/g' -i /etc/sudoers
+# To uncomment the passwordless entry
+sed -i 's/\# \%wheel/\%wheel/' /etc/sudoers
+# To comment the password required entry
+sed -i '0,/\%wheel/ s/\%wheel/\# \%wheel/' /etc/sudoers
 
 # Update ulimit for nofile
 echo *	hard	nofile	10250 >> /etc/security/limits.conf

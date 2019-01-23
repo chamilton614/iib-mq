@@ -4,6 +4,8 @@
 CPWD=`pwd`
 #read -p "CPWD is ${CPWD}"
 
+export IIB_VERSION=10.0.0.15
+
 #Cleanup IBNODE01 and QM01
 mqsistop IBNODE01
 endmqm QM01
@@ -24,10 +26,19 @@ killall -9 -u iibuser
 userdel --remove iibuser
 #userdel --remove mqm
 
+#Remove root from groups
+gpasswd -d root mqbrkrs
+gpasswd -d root mqclient
+
 #Remove Groups
 groupdel mqbrkrs
 groupdel mqclient
-#groupdel mqm
+
+echo "Cleaning .bash_profile"
+sed -i '/export LICENSE=accept/d' /root/.bash_profile
+sed -i "s/:\/opt\/ibm\/iib-${IIB_VERSION}\/server\/bin//g" /root/.bash_profile
+sed -i '/source \/opt\/mqm\/bin\/setmqenv -s/d' /root/.bash_profile
+sed -i '/source \/opt\/ibm\/iib-/d' /root/.bash_profile
 
 rm -rf /opt/ibm
 rm -rf /tmp/iib
