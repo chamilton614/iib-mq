@@ -5,10 +5,8 @@
 #Get Current Scripts Directory
 CPWD=`pwd`
 
-# Configure system
-#echo "IIB_10:" > /etc/rpm_chroot 
-#touch /var/log/syslog
-#chown root:root /var/log/syslog
+#IIB Installed Version
+IIB_VERSION=10.0.0.15
 
 # Create user to run as
 groupadd -f mqbrkrs
