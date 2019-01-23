@@ -17,12 +17,10 @@ mqsideletebroker IBNODE1
 dltmqm QM1
 
 #Kill User Processes
-killall -9 -u iibmquser
 killall -9 -u iibuser
 killall -9 -u mqm
 
 #Remove Users
-userdel --remove iibmquser
 userdel --remove iibuser
 userdel --remove mqm
 
