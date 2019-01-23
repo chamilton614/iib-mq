@@ -75,8 +75,8 @@ fi
 #Update mqm .bash_profile
 if [ ! -f "/opt/ibm/mqmupdated" ] && [ -d "/home/mqm/" ]; then
 	touch /opt/ibm/mqmupdated
-	echo export LICENSE=accept >> /home/mqm/.bash_profile
-	echo PATH=$PATH:/usr/local/bin:/opt/mqm/bin:/opt/mqm/samp/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin >> /home/mqm/.bash_profile
+	#echo export LICENSE=accept >> /home/mqm/.bash_profile
+	echo PATH=$PATH:/opt/ibm/iib-${IIB_VERSION}/server/bin >> /home/mqm/.bash_profile
 	echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile >> /home/mqm/.bash_profile
 	source /home/mqm/.bash_profile
 fi

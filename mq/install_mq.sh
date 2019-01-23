@@ -61,6 +61,16 @@ usermod -G mqm root
 # Create Home directory for .bash_profile
 mkdir -p /home/mqm
 chown -R mqm:mqm /home/mqm
+chmod -R 755 /home/mqm
+
+#Update mqm .bash_profile
+if [ ! -f "/opt/mqm/mqmupdated" ] && [ -d "/home/mqm/" ]; then
+	touch /opt/mqm/mqmupdated
+	echo export LICENSE=accept >> /home/mqm/.bash_profile
+	echo PATH=$PATH:/usr/local/bin:/opt/mqm/bin:/opt/mqm/samp/bin >> /home/mqm/.bash_profile
+	echo source /opt/mqm/bin/setmqenv >> /home/mqm/.bash_profile
+	source /home/mqm/.bash_profile
+fi
 
 #MQ Packages to Install
 MQ_PACKAGES="MQSeriesRuntime-*.rpm MQSeriesServer-*.rpm MQSeriesJava*.rpm MQSeriesJRE*.rpm MQSeriesGSKit*.rpm MQSeriesMsg*.rpm MQSeriesSamples*.rpm MQSeriesAMS-*.rpm"
