@@ -35,8 +35,19 @@ tar -Uzxvf ${DIR_EXTRACT}/${IIB_FILE} -C /opt/ibm/ 2>&1 > /dev/null
 /opt/ibm/iib-${IIB_VERSION}/iib make registry global accept license silently
 export LICENSE=accept
 
-#Configure IIB
-${CPWD}/iib/configure_iib.sh
+#Check Path
+if [ -e "${CPWD}/iib/configure_iib.sh" ]; then
+	#Configure IIB
+	${CPWD}/iib/configure_iib.sh
+else
+	if [ -e "${CPWD}/configure_iib.sh" ]; then
+		#Configure IIB
+		${CPWD}/configure_iib.sh
+	else
+		echo "Unable to locate configure_iib.sh from the path ${CPWD}"
+		exit
+	fi
+fi
 
 # Configure system
 #echo "IIB_10:" > /etc/rpm_chroot 

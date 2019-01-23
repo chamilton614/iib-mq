@@ -22,15 +22,33 @@ sed -e 's/^%sudo	.*/%sudo	ALL=NOPASSWD:ALL/g' -i /etc/sudoers
 echo *	hard	nofile	10250 >> /etc/security/limits.conf
 echo *	soft	nofile	10250 >> /etc/security/limits.conf
 
-#Copy IIB and MQ Scripts
-echo "Copy IIB and MQ Scripts"
-cp ${CPWD}/iib/iib-scripts/*.sh /usr/local/bin/
-chmod 755 /usr/local/bin/*.sh
-echo "Copy Test.bar"
-cp ${CPWD}/iib/iib-scripts/*.bar /usr/local/bin/
-echo "Copy mq-config"
-cp ${CPWD}/iib/iib-scripts/mq-config /etc/mqm/mq-config
-chmod 755 /etc/mqm/mq-config
+#Check the Path
+if [ -d "${CPWD}/iib/iib-scripts/" ]; then
+	#Copy IIB and MQ Scripts
+	echo "Copy IIB and MQ Scripts"
+	cp ${CPWD}/iib/iib-scripts/*.sh /usr/local/bin/
+	chmod 755 /usr/local/bin/*.sh
+	echo "Copy Test.bar"
+	cp ${CPWD}/iib/iib-scripts/*.bar /usr/local/bin/
+	echo "Copy mq-config"
+	cp ${CPWD}/iib/iib-scripts/mq-config /etc/mqm/mq-config
+	chmod 755 /etc/mqm/mq-config
+else
+	if [ -d "${CPWD}/iib-scripts/" ]; then
+		#Copy IIB and MQ Scripts
+		echo "Copy IIB and MQ Scripts"
+		cp ${CPWD}/iib-scripts/*.sh /usr/local/bin/
+		chmod 755 /usr/local/bin/*.sh
+		echo "Copy Test.bar"
+		cp ${CPWD}/iib-scripts/*.bar /usr/local/bin/
+		echo "Copy mq-config"
+		cp ${CPWD}/iib-scripts/mq-config /etc/mqm/mq-config
+		chmod 755 /etc/mqm/mq-config
+	else
+		echo "Unable to locate iib-scripts from the path ${CPWD}"
+		exit
+	fi
+fi
 
 # Set BASH_ENV to source mqsiprofile when using docker exec bash -c
 export BASH_ENV=/usr/local/bin/iib_env.sh MQSI_MQTT_LOCAL_HOSTNAME=127.0.0.1 MQSI_DONT_RUN_LISTENER=true LANG=en_US.UTF-8

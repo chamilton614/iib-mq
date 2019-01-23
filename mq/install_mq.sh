@@ -25,6 +25,7 @@ yum -y install \
   sed \
   tar \
   vim \
+  psmisc \
   util-linux
 
 # Download and extract the MQ installation files
@@ -37,8 +38,7 @@ MQ_FILE=mqadv_dev911_linux_x86-64.tar.gz
 MQ_URL="https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/${MQ_FILE}"
 
 #Check if /iibdata/mqadv_dev911_linux_x86-64.tar.gz exists, otherwise download it
-if [ -e "${DIR_EXTRACT}/${MQ_FILE}" ]
-then
+if [ -e "${DIR_EXTRACT}/${MQ_FILE}" ]; then
 	echo "${DIR_EXTRACT}/${MQ_FILE} exists, no download required"
 else
 	echo "Downloading MQ to $DIR_EXTRACT"

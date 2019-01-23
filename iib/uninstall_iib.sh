@@ -44,11 +44,23 @@ iptables -F
 iptables -X
 iptables-save
 
-cd ${CPWD}/iib/iib-scripts/
+#Check Path
+if [ -d "${CPWD}/iib/iib-scripts/" ]; then
+	cd ${CPWD}/iib/iib-scripts/
+else
+	if [ -d "${CPWD}/iib-scripts/" ]; then
+		cd ${CPWD}/iib-scripts/
+	else
+		echo "Unable to locate iib-scripts from the path ${CPWD}"
+		exit
+	fi
+fi
+
+#Remove the iib-scripts copied to /usr/local/bin
 for f in `ls *.sh`
 do
  echo "Removing /usr/local/bin/$f"
  rm -rf /usr/local/bin/$f
 done
-cd -
+
 
