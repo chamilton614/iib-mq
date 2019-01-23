@@ -1,16 +1,32 @@
 #!/bin/bash
 
-#End MQ Activity
-/opt/mqm/bin/setmqenv -s
-dspmq -o installation
-endmqm QM1
-endmqlsr -m QM1
+#Cleanup IBNODE01 and QM01
+#mqsistop IBNODE01
+#endmqm QM01
+#mqsideletebroker IBNODE01
+#dltmqm QM01
+#
+#Cleanup IBNODE1 and QM1
+#mqsistop IBNODE1
+#endmqm QM1
+#mqsideletebroker IBNODE1
+#dltmqm QM1
+
+#Kill User Processes
+#killall -9 -u iibmquser
+#killall -9 -u mqm
+
+#Remove Users
+#userdel --remove iibmquser
+#userdel --remove mqm
+
+#Remove Groups
+#groupdel mqbrkrs
+#groupdel mqclient
+#groupdel mqm
 
 #Remove MQ Packages
-rpm -qa | grep MQSeries | xargs rpm -ev
-killall -9 -u mqm
-userdel --remove mqm
-groupdel mqm
+rpm -qa | grep MQSeries | xargs rpm -ev 2>&1 > /dev/null
 
 rm -rf /opt/mqm
 rm -rf /var/mqm
