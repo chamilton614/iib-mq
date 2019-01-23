@@ -55,8 +55,8 @@ tar -zxvf ${DIR_EXTRACT}/${MQ_FILE} -C ${DIR_EXTRACT}/ 2>&1 > /dev/null
 # Recommended: Create the mqm user ID with a fixed UID and group, so that the file permissions work between different images
 groupadd --system --gid 980 mqm
 useradd --system --uid 980 --gid mqm mqm
-usermod -G mqm root
-#usermod -aG mqm root
+#usermod -G mqm root
+usermod -aG mqm root
 
 # Create Home directory for .bash_profile
 mkdir -p /home/mqm
