@@ -5,12 +5,14 @@
 #Get Current Scripts Directory
 CPWD=`pwd`
 
+read -p "CPWD is ${CPWD}"
+
 mkdir -p /tmp/iib
 mkdir -p /opt/ibm
 #cd /opt/ibm
 
 echo "exporting DIR_EXTRACT=/tmp/iib"
-export DIR_EXTRACT=/tmp/iib/
+export DIR_EXTRACT=/tmp/iib
 mkdir -p ${DIR_EXTRACT}
 
 IIB_VERSION=10.0.0.15

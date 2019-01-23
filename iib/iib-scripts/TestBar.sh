@@ -1,7 +1,9 @@
 #!/bin/bash
 
 #Get Current Scripts Directory
-export CPWD=`pwd`
+CPWD=`pwd`
+
+read -p "CPWD is ${CPWD}"
 
 #Source the User .bash_profile
 source ~/.bash_profile

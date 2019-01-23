@@ -4,6 +4,7 @@
 
 #Get Current Scripts Directory
 CPWD=`pwd`
+read -p "CPWD is ${CPWD}"
 
 mkdir -p ${CPWD}/logs/mq/
 
@@ -27,7 +28,7 @@ yum -y install \
 
 # Download and extract the MQ installation files
 echo "exporting DIR_EXTRACT=/tmp/mq"
-export DIR_EXTRACT=/tmp/mq/
+export DIR_EXTRACT=/tmp/mq
 mkdir -p /tmp/mq/
 #cd /tmp/mq
 
