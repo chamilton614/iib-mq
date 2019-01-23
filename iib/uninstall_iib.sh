@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#Get Current Scripts Directory
+CPWD=`pwd`
+
 #Cleanup IBNODE01 and QM01
 mqsistop IBNODE01
 endmqm QM01

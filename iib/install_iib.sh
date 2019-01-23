@@ -1,6 +1,10 @@
 #!/bin/bash
 
 # Install IIB v10.0.0.x Developer edition
+
+#Get Current Scripts Directory
+CPWD=`pwd`
+
 mkdir -p /tmp/iib
 mkdir -p /opt/ibm
 #cd /opt/ibm
@@ -55,17 +59,17 @@ iptables -I INPUT -p tcp --dport 7800 -j ACCEPT
 iptables -I INPUT -p tcp --dport 1414 -j ACCEPT
 
 # Update ulimit for nofile
-echo *	hard	nofile	10250>> /etc/security/limits.conf
-echo *	soft	nofile	10250>> /etc/security/limits.conf
+echo *	hard	nofile	10250 >> /etc/security/limits.conf
+echo *	soft	nofile	10250 >> /etc/security/limits.conf
 
 #Copy IIB and MQ Scripts
 echo "Copy IIB and MQ Scripts"
-cp iib-scripts/*.sh /usr/local/bin/
+cp $CPWD/iib-scripts/*.sh /usr/local/bin/
 chmod 755 /usr/local/bin/*.sh
 echo "Copy Test.bar"
-cp iib-scripts/*.bar /usr/local/bin/
+cp $CPWD/iib-scripts/*.bar /usr/local/bin/
 echo "Copy mq-config"
-cp iib-scripts/mq-config /etc/mqm/mq-config
+cp $CPWD/iib-scripts/mq-config /etc/mqm/mq-config
 chmod 755 /etc/mqm/mq-config
 
 #For IIB Service

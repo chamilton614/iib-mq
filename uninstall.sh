@@ -3,10 +3,13 @@
 #Setup Logs directory
 mkdir -p logs
 
+#Get Current Scripts Directory
+CPWD=`pwd`
+
 #Uninstall IIB
-iib/uninstall_iib.sh 2>&1 | tee logs/uninstall_iib.log
+$CPWD/iib/uninstall_iib.sh 2>&1 | tee logs/uninstall_iib.log
 
 #Uninstall MQ
-mq/uninstall_mq.sh 2>&1 | tee logs/uninstall_mq.log
+$CPWD/mq/uninstall_mq.sh 2>&1 | tee logs/uninstall_mq.log
 
 

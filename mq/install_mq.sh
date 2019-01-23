@@ -2,7 +2,10 @@
 
 # Install MQ v9.1.1.x Developer edition
 
-mkdir -p logs/mq/
+#Get Current Scripts Directory
+CPWD=`pwd`
+
+mkdir -p $CPWD/logs/mq/
 
 # Install additional packages required by MQ, this install process and the runtime scripts
 yum -y install \
