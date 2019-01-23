@@ -48,27 +48,27 @@ iptables -I INPUT -p tcp --dport 1414 -j ACCEPT
 #Update root .bash_profile
 if [ ! -f "/opt/ibm/rootupdated" ] && [ -d "/root" ]; then
 	touch /opt/ibm/rootupdated
-	echo export LICENSE=accept>> /root/.bash_profile
-	echo PATH=$PATH:/usr/local/bin:/opt/mqm/bin:/opt/mqm/samp/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /root/.bash_profile
-	echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile>> /root/.bash_profile
+	echo export LICENSE=accept >> /root/.bash_profile
+	echo PATH=$PATH:/usr/local/bin:/opt/mqm/bin:/opt/mqm/samp/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin >> /root/.bash_profile
+	echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile >> /root/.bash_profile
 	source /root/.bash_profile
 fi
 
 #Update mqm .bash_profile
 if [ ! -f "/opt/ibm/mqmupdated" ] && [ -d "/home/mqm/" ]; then
 	touch /opt/ibm/mqmupdated
-	echo export LICENSE=accept>> /home/mqm/.bash_profile
-	echo PATH=$PATH:/usr/local/bin:/opt/mqm/bin:/opt/mqm/samp/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /home/mqm/.bash_profile
-	echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile>> /home/mqm/.bash_profile
+	echo export LICENSE=accept >> /home/mqm/.bash_profile
+	echo PATH=$PATH:/usr/local/bin:/opt/mqm/bin:/opt/mqm/samp/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin >> /home/mqm/.bash_profile
+	echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile >> /home/mqm/.bash_profile
 	source /home/mqm/.bash_profile
 fi
 
 #Update iibuser .bash_profile
 if [ ! -f "/opt/ibm/iibuserupdated" ] && [ -d "/home/iibuser/" ]; then
 	touch /opt/ibm/iibuserupdated
-	echo export LICENSE=accept>> /home/iibuser/.bash_profile
-	echo PATH=$PATH:/usr/local/bin:/opt/mqm/bin:/opt/mqm/samp/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /home/iibuser/.bash_profile
-	echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile>> /home/iibuser/.bash_profile
+	echo export LICENSE=accept >> /home/iibuser/.bash_profile
+	echo PATH=$PATH:/usr/local/bin:/opt/mqm/bin:/opt/mqm/samp/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin >> /home/iibuser/.bash_profile
+	echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile >> /home/iibuser/.bash_profile
 	source /home/iibuser/.bash_profile
 fi
 

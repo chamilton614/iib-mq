@@ -24,6 +24,7 @@ yum -y install \
   procps-ng \
   sed \
   tar \
+  vim \
   util-linux
 
 # Download and extract the MQ installation files
@@ -57,6 +58,9 @@ groupadd --system --gid 980 mqm
 useradd --system --uid 980 --gid mqm mqm
 usermod -G mqm root
 #usermod -aG mqm root
+
+# Create Home directory for .bash_profile
+mkdir -p /home/mqm
 
 #MQ Packages to Install
 MQ_PACKAGES="MQSeriesRuntime-*.rpm MQSeriesServer-*.rpm MQSeriesJava*.rpm MQSeriesJRE*.rpm MQSeriesGSKit*.rpm MQSeriesMsg*.rpm MQSeriesSamples*.rpm MQSeriesAMS-*.rpm"
