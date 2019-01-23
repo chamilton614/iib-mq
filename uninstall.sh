@@ -4,9 +4,9 @@
 mkdir -p logs
 
 #Uninstall IIB
-/iib/uninstall_iib.sh | tee logs/uninstall_iib.log 2>&1
+iib/uninstall_iib.sh 2>&1 | tee logs/uninstall_iib.log
 
 #Uninstall MQ
-/mq/uninstall_mq.sh | tee logs/uninstall_mq.log 2>&1
+mq/uninstall_mq.sh 2>&1 | tee logs/uninstall_mq.log
 
 
