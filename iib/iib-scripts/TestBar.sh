@@ -1,16 +1,23 @@
 #!/bin/bash
 
+#Source the User .bash_profile
+source ~/.bash_profile
+
 # Stop the Node Broker IBNODE01
 mqsistop IBNODE01
+sleep 5
 
 # Stop QM01 Queue Manager
 endmqm QM01
+sleep 5
 
 # Delete the Node Broker IBNODE01
 mqsideletebroker IBNODE01
+sleep 5
 
 # Delete QM01 Queue Manager
 dltmqm QM01
+sleep 5
 
 # Creating QM1 Queue Manager
 crtmqm QM01
@@ -23,9 +30,11 @@ mqsicreatebroker IBNODE01 -q QM01
 
 # Starting the Integration Node
 # creating Queues
-runmqsc QM01
+runmqsc QM01 << EOF
 DEFINE QL(IN)
 DEFINE QL(OUT)
+EOF
+
 mqsistart IBNODE01
 
 # Creating the Integration Servver/ Execution Group
@@ -43,9 +52,10 @@ mqsicreateconfigurableservice IBNODE01 -c ActivityLog -o SampleConfigService -n 
 #Testing by putting message
 
 #Putting the message on IN queue
-amqsput IN QM01
+amqsput IN QM01 << EOF
 Test1
 Test2
+EOF
 
 #Getting the message from the OUT queue
 amqsget OUT QM01

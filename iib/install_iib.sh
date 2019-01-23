@@ -60,10 +60,11 @@ echo *	soft	nofile	10250>> /etc/security/limits.conf
 
 #Copy IIB and MQ Scripts
 echo "Copy IIB and MQ Scripts"
-#cp /iibdata/mq-scripts/*.sh /usr/local/bin/
 cp iib-scripts/*.sh /usr/local/bin/
 chmod 755 /usr/local/bin/*.sh
-#cp /iibdata/mq-scripts/mq-config /etc/mqm/mq-config
+echo "Copy Test.bar"
+cp iib-scripts/*.bar /usr/local/bin/
+echo "Copy mq-config"
 cp iib-scripts/mq-config /etc/mqm/mq-config
 chmod 755 /etc/mqm/mq-config
 
