@@ -77,7 +77,7 @@ chmod 755 /etc/mqm/mq-config
 if [ ! -f "/opt/ibm/iibuserupdated" ]; then
 	touch /opt/ibm/iibuserupdated
 	echo export LICENSE=accept>> /home/iibuser/.bash_profile
-	echo PATH=$PATH:/opt/mqm/bin:/opt/mqm/samp/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /home/iibuser/.bash_profile
+	echo PATH=$PATH:/usr/local/bin:/opt/mqm/bin:/opt/mqm/samp/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /home/iibuser/.bash_profile
 	echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile>> /home/iibuser/.bash_profile
 	source /home/iibuser/.bash_profile
 fi
