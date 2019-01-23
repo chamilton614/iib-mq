@@ -30,6 +30,7 @@ groupdel mqm
 #Remove MQ Packages
 rpm -qa | grep MQSeries | xargs rpm -ev 2>&1 > /dev/null
 
+rm -rf /home/mqm
 rm -rf /opt/mqm
 rm -rf /var/mqm
 rm -rf /tmp/mq

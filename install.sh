@@ -8,9 +8,28 @@ CPWD=`pwd`
 mkdir -p ${CPWD}/logs
 
 #Install MQ
-${CPWD}/mq/install_mq.sh 2>&1 | tee ${CPWD}/logs/install_mq.log
+if [ -e "${CPWD}/mq/install_mq.sh" ]; then
+	${CPWD}/mq/install_mq.sh 2>&1 | tee ${CPWD}/logs/install_mq.log
+else
+	if [ -e "${CPWD}/install_mq.sh" ]; then
+		${CPWD}/install_mq.sh 2>&1 | tee ${CPWD}/logs/install_mq.log
+	else
+		echo "Unable to locate install_mq.sh in the path ${CPWD}"
+		exit 1
+	fi
+fi
 
 #Install IIB
-${CPWD}/iib/install_iib.sh 2>&1 | tee ${CPWD}/logs/install_iib.log
+if [ -e "${CPWD}/iib/install_iib.sh" ]; then
+	${CPWD}/iib/install_iib.sh 2>&1 | tee ${CPWD}/logs/install_iib.log
+else
+	if [ -e "${CPWD}/install_iib.sh" ]; then
+		${CPWD}/install_iib.sh 2>&1 | tee ${CPWD}/logs/install_iib.log
+	else
+		echo "Unable to locate install_iib.sh in the path ${CPWD}"
+		exit 1
+	fi
+fi
 
-
+echo ""
+echo "Install of IIB and MQ has been completed"
