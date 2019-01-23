@@ -36,7 +36,7 @@ rm -rf /etc/mqm/mq-config
 cd iib/iib-scripts/
 for f in `ls *.sh`
 do
- echo "Removing $f"
+ echo "Removing /usr/local/bin/$f"
  rm -rf /usr/local/bin/$f
 done
 cd -
