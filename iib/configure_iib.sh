@@ -11,8 +11,9 @@ IIB_VERSION=10.0.0.15
 # Create user to run as
 groupadd -f mqbrkrs
 groupadd -f mqclient
-useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo,mqm,mqclient iibuser
-#usermod -aG mqbrkrs,mqm,mqclient,wheel iibuser
+#useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo,mqm,mqclient iibuser
+useradd iibuser
+usermod -aG mqbrkrs,mqm,mqclient,wheel iibuser
 
 #Update the sudoers for iibuser
 sed -e 's/^%sudo	.*/%sudo	ALL=NOPASSWD:ALL/g' -i /etc/sudoers
@@ -45,7 +46,7 @@ iptables -I INPUT -p tcp --dport 1414 -j ACCEPT
 #chmod 755 /etc/init.d/iibservice
 
 #Update root .bash_profile
-if [ ! -f "/opt/ibm/rootupdated" ]; then
+if [ ! -f "/opt/ibm/rootupdated" ] && [ -d "/root" ]; then
 	touch /opt/ibm/rootupdated
 	echo export LICENSE=accept>> /root/.bash_profile
 	echo PATH=$PATH:/usr/local/bin:/opt/mqm/bin:/opt/mqm/samp/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /root/.bash_profile
@@ -54,7 +55,7 @@ if [ ! -f "/opt/ibm/rootupdated" ]; then
 fi
 
 #Update mqm .bash_profile
-if [ ! -f "/opt/ibm/mqmupdated" ]; then
+if [ ! -f "/opt/ibm/mqmupdated" ] && [ -d "/home/mqm/" ]; then
 	touch /opt/ibm/mqmupdated
 	echo export LICENSE=accept>> /home/mqm/.bash_profile
 	echo PATH=$PATH:/usr/local/bin:/opt/mqm/bin:/opt/mqm/samp/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /home/mqm/.bash_profile
@@ -63,7 +64,7 @@ if [ ! -f "/opt/ibm/mqmupdated" ]; then
 fi
 
 #Update iibuser .bash_profile
-if [ ! -f "/opt/ibm/iibuserupdated" ]; then
+if [ ! -f "/opt/ibm/iibuserupdated" ] && [ -d "/home/iibuser/" ]; then
 	touch /opt/ibm/iibuserupdated
 	echo export LICENSE=accept>> /home/iibuser/.bash_profile
 	echo PATH=$PATH:/usr/local/bin:/opt/mqm/bin:/opt/mqm/samp/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /home/iibuser/.bash_profile

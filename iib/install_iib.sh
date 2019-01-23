@@ -120,6 +120,11 @@ ${CPWD}/iib/configure_iib.sh
 ##read -p "Proceed to run iib_manage.sh? Ctrl+C to quit"
 #runuser -l iibuser -c "iib_manage.sh"
 
+# Clean up yum files
+#yum -y clean all
+#rm -rf /var/cache/yum/*
 
+# Clean up all the downloaded files
+#rm -rf ${DIR_EXTRACT}
 
 
