@@ -60,6 +60,7 @@ usermod -G mqm root
 
 # Create Home directory for .bash_profile
 mkdir -p /home/mqm
+chown -R mqm:mqm /home/mqm
 
 #MQ Packages to Install
 MQ_PACKAGES="MQSeriesRuntime-*.rpm MQSeriesServer-*.rpm MQSeriesJava*.rpm MQSeriesJRE*.rpm MQSeriesGSKit*.rpm MQSeriesMsg*.rpm MQSeriesSamples*.rpm MQSeriesAMS-*.rpm"
