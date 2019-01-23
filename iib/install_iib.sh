@@ -28,7 +28,7 @@ else
 fi
 
 #Extract IIB
-tar -Uzxvf /tmp/iib/${IIB_FILE} -C /opt/ibm/ 2>&1 > /dev/null
+tar -Uzxvf ${DIR_EXTRACT}/${IIB_FILE} -C /opt/ibm/ 2>&1 > /dev/null
 
 #Launch Installer
 /opt/ibm/iib-${IIB_VERSION}/iib make registry global accept license silently

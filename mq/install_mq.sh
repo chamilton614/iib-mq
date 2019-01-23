@@ -41,12 +41,12 @@ then
 else
 	echo "Downloading MQ to $DIR_EXTRACT"
 	#Download MQ to /tmp/mq
-	(cd /tmp/mq/ && curl -LO ${MQ_URL})
+	(cd ${DIR_EXTRACT} && curl -LO ${MQ_URL})
 	#curl -LO https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev911_linux_x86-64.tar.gz
 fi
 
 #Extract MQ
-tar -zxvf /tmp/mq/${MQ_FILE} -C /tmp/mq/ 2>&1 > /dev/null
+tar -zxvf ${DIR_EXTRACT}/${MQ_FILE} -C ${DIR_EXTRACT}/ 2>&1 > /dev/null
 
 #Extract MQ from /iibdata
 #tar -zxvf /iibdata/mqadv_dev911_linux_x86-64.tar.gz -C /tmp/mq 2>&1 > /dev/null

@@ -31,7 +31,7 @@ groupdel mqclient
 groupdel mqm
 
 rm -rf /opt/ibm
-rm -rf /tmp/mq
+rm -rf /tmp/iib
 rm -f /var/log/syslog
 rm -rf /var/mqsi
 rm -rf /var/run/syslogd.pid
@@ -44,4 +44,12 @@ iptables -t mangle -F
 iptables -F
 iptables -X
 iptables-save
+
+cd ${CPWD}/iib/iib-scripts/
+for f in `ls *.sh`
+do
+ echo "Removing /usr/local/bin/$f"
+ rm -rf /usr/local/bin/$f
+done
+cd -
 

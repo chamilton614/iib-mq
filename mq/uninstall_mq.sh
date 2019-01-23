@@ -36,10 +36,3 @@ rm -rf /var/mqm
 rm -rf /tmp/mq
 rm -rf /etc/mqm/mq-config
 #rm -rf /etc/init.d/iibservice
-cd ${CPWD}/iib/iib-scripts/
-for f in `ls *.sh`
-do
- echo "Removing /usr/local/bin/$f"
- rm -rf /usr/local/bin/$f
-done
-cd -
