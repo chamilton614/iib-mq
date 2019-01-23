@@ -5,7 +5,7 @@
 #Get Current Scripts Directory
 CPWD=`pwd`
 
-mkdir -p $CPWD/logs/mq/
+mkdir -p ${CPWD}/logs/mq/
 
 # Install additional packages required by MQ, this install process and the runtime scripts
 yum -y install \
@@ -32,21 +32,21 @@ mkdir -p /tmp/mq/
 #cd /tmp/mq
 
 MQ_FILE=mqadv_dev911_linux_x86-64.tar.gz
-MQ_URL="https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/$MQ_FILE"
+MQ_URL="https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/${MQ_FILE}"
 
 #Check if /iibdata/mqadv_dev911_linux_x86-64.tar.gz exists, otherwise download it
-if [ -e "$DIR_EXTRACT/$MQ_FILE" ]
+if [ -e "${DIR_EXTRACT}/${MQ_FILE}" ]
 then
-	echo "$DIR_EXTRACT/$MQ_FILE exists, no download required"
+	echo "${DIR_EXTRACT}/${MQ_FILE} exists, no download required"
 else
 	echo "Downloading MQ to $DIR_EXTRACT"
 	#Download MQ to /tmp/mq
-	(cd /tmp/mq/ && curl -LO $MQ_URL)
+	(cd /tmp/mq/ && curl -LO ${MQ_URL})
 	#curl -LO https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev911_linux_x86-64.tar.gz
 fi
 
 #Extract MQ
-tar -zxvf /tmp/mq/$MQ_FILE -C /tmp/mq/ 2>&1 > /dev/null
+tar -zxvf /tmp/mq/${MQ_FILE} -C /tmp/mq/ 2>&1 > /dev/null
 
 #Extract MQ from /iibdata
 #tar -zxvf /iibdata/mqadv_dev911_linux_x86-64.tar.gz -C /tmp/mq 2>&1 > /dev/null
@@ -67,13 +67,13 @@ export DIR_RPM=$(find ${DIR_EXTRACT} -name "*.rpm" -printf "%h\n" | sort -u | he
 export MQLICENSE=$(find ${DIR_EXTRACT} -name "mqlicense.sh")
 
 # Accept the MQ license
-echo $MQLICENSE
+echo ${MQLICENSE}
 ${MQLICENSE} -text_only -accept
 
 # Install MQ using the RPM packages
 echo "Installing the RPM Packages"
 mkdir -p /opt/mqm
-for x in $MQ_PACKAGES; do rpm -ivh $DIR_RPM/$x; done
+for x in ${MQ_PACKAGES}; do rpm -ivh ${DIR_RPM}/$x; done
 
 echo "Performing a Yum Update"
 yum -y update

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#Get Current Scripts Directory
+export CPWD=`pwd`
+
 #Source the User .bash_profile
 source ~/.bash_profile
 
@@ -44,7 +47,7 @@ mqsicreateexecutiongroup IBNODE01 -e EG01
 mqsistartmsgflow IBNODE01 -e EG01
 
 # Deploying the barfile in to integration server on the Integration Node
-mqsideploy IBNODE01 -e EG01 -a /usr/local/bin/TestBar.bar -m -w 600
+mqsideploy IBNODE01 -e EG01 -a ${CPWD}/TestBar.bar -m -w 600
 
 # Creating the Sample Configurable Service
 mqsicreateconfigurableservice IBNODE01 -c ActivityLog -o SampleConfigService -n filter,fileName,minSeverityLevel,formatEntries,executionGroupFilter,numberOfLogs,enabled,maxFileSizeMb,maxAgeMins -v "","","INFO","false","","4","true","25","0"

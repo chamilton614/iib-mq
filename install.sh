@@ -7,9 +7,9 @@ mkdir -p logs
 CPWD=`pwd`
 
 #Install MQ
-$CPWD/mq/install_mq.sh 2>&1 | tee logs/install_mq.log
+${CPWD}/mq/install_mq.sh 2>&1 | tee logs/install_mq.log
 
 #Install IIB
-$CPWD/iib/install_iib.sh 2>&1 | tee logs/install_iib.log
+${CPWD}/iib/install_iib.sh 2>&1 | tee logs/install_iib.log
 
 

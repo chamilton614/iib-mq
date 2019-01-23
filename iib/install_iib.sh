@@ -11,29 +11,24 @@ mkdir -p /opt/ibm
 
 echo "exporting DIR_EXTRACT=/tmp/iib"
 export DIR_EXTRACT=/tmp/iib/
-mkdir -p $DIR_EXTRACT
+mkdir -p ${DIR_EXTRACT}
 
 IIB_VERSION=10.0.0.15
 IIB_FILE=${IIB_VERSION}-IIB.LINUX64-DEVELOPER.tar.gz
-IIB_URL="http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/$IIB_FILE"
+IIB_URL="http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/${IIB_FILE}"
 
 #Check if /iibdata/10.0.0.15-IIB-LINUX64-DEVELOPER.tar.gz exists, otherwise download it
-if [ -e "$DIR_EXTRACT/$IIB_FILE" ]
+if [ -e "${DIR_EXTRACT}/${IIB_FILE}" ]
 then
-	echo "$DIR_EXTRACT/$IIB_FILE exists, no download required"
+	echo "${DIR_EXTRACT}/${IIB_FILE} exists, no download required"
 else
-	echo "Downloading IIB to $DIR_EXTRACT"
+	echo "Downloading IIB to ${DIR_EXTRACT}"
 	#Download IIB to /tmp/iib
-	(cd $DIR_EXTRACT && curl -LO $IIB_URL)
-	#curl -LO https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev911_linux_x86-64.tar.gz
+	(cd ${DIR_EXTRACT} && curl -LO ${IIB_URL})
 fi
 
-#Download IIB
-(cd $DIR_EXTRACT && curl -LO $IIB_URL)
-#curl -LO http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.15-IIB-LINUX64-DEVELOPER.tar.gz
-
 #Extract IIB
-tar -Uzxvf /tmp/iib/$IIB_FILE -C /opt/ibm/ 2>&1 > /dev/null
+tar -Uzxvf /tmp/iib/${IIB_FILE} -C /opt/ibm/ 2>&1 > /dev/null
 
 #Launch Installer
 /opt/ibm/iib-${IIB_VERSION}/iib make registry global accept license silently
@@ -64,12 +59,12 @@ echo *	soft	nofile	10250 >> /etc/security/limits.conf
 
 #Copy IIB and MQ Scripts
 echo "Copy IIB and MQ Scripts"
-cp $CPWD/iib-scripts/*.sh /usr/local/bin/
+cp ${CPWD}/iib-scripts/*.sh /usr/local/bin/
 chmod 755 /usr/local/bin/*.sh
 echo "Copy Test.bar"
-cp $CPWD/iib-scripts/*.bar /usr/local/bin/
+cp ${CPWD}/iib-scripts/*.bar /usr/local/bin/
 echo "Copy mq-config"
-cp $CPWD/iib-scripts/mq-config /etc/mqm/mq-config
+cp ${CPWD}/iib-scripts/mq-config /etc/mqm/mq-config
 chmod 755 /etc/mqm/mq-config
 
 #For IIB Service
