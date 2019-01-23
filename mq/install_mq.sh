@@ -66,9 +66,19 @@ chmod -R 755 /home/mqm
 #Update mqm .bash_profile
 if [ ! -f "/opt/mqm/mqmupdated" ] && [ -d "/home/mqm/" ]; then
 	touch /opt/mqm/mqmupdated
-	echo export LICENSE=accept >> /home/mqm/.bash_profile
-	echo PATH=$PATH:/usr/local/bin:/opt/mqm/bin:/opt/mqm/samp/bin >> /home/mqm/.bash_profile
-	echo source /opt/mqm/bin/setmqenv >> /home/mqm/.bash_profile
+	if [ ! `cat /home/mqm/.bash_profile | grep "LICENSE=accept"` ]; then
+		echo "Exporting License"; echo export LICENSE=accept >> /home/mqm/.bash_profile
+	fi
+	if [ ! `cat /home/mqm/.bash_profile | grep "/usr/local/bin:/opt/mqm/bin:/opt/mqm/samp/bin"` ]; then
+		echo "Updating PATH"; echo PATH='$PATH':/usr/local/bin:/opt/mqm/bin:/opt/mqm/samp/bin >> /home/mqm/.bash_profile
+	fi
+	if [ ! `cat /home/mqm/.bash_profile | grep "source /opt/mqm/bin/setmqenv"` ]; then
+		echo "Setting source setmqenv"; echo source /opt/mqm/bin/setmqenv >> /home/mqm/.bash_profile
+	fi
+	echo "Exporting Path"
+	sed -i '/export PATH/d' /home/mqm/.bash_profile
+	echo export PATH >> /home/mqm/.bash_profile
+	echo "Source /home/mqm/.bash_profile"
 	source /home/mqm/.bash_profile
 fi
 
