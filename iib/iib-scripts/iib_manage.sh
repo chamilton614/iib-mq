@@ -41,7 +41,7 @@ start_iib()
           echo "----------------------------------------" 
           echo "----------------------------------------"
           echo "Starting syslog"
-          /usr/sbin/rsyslogd
+          echo -e "iibuser" | sudo /usr/sbin/rsyslogd
           echo "Starting node $NODENAME"
           mqsistart $NODENAME
           echo "----------------------------------------" 
@@ -61,7 +61,7 @@ start_iib()
 	else
           echo "----------------------------------------"
           echo "Starting syslog"
-          /usr/sbin/rsyslogd
+          echo -e "iibuser" | sudo /usr/sbin/rsyslogd
           echo "Starting node $NODENAME"
           mqsistart $NODENAME
           echo "----------------------------------------" 

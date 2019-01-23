@@ -16,6 +16,9 @@ useradd iibuser
 usermod -aG mqbrkrs,mqm,mqclient,wheel iibuser
 usermod -aG mqbrkrs,mqclient root
 
+#Set iibuser
+echo -e "iibuser\niibuser" | passwd iibuser
+
 #Update the sudoers for iibuser
 sed -e 's/^%sudo	.*/%sudo	ALL=NOPASSWD:ALL/g' -i /etc/sudoers
 
