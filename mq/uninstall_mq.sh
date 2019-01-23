@@ -17,15 +17,15 @@ CPWD=`pwd`
 #dltmqm QM1
 
 #Kill User Processes
-#killall -9 -u mqm
+killall -9 -u mqm
 
 #Remove Users
-#userdel --remove mqm
+userdel --remove mqm
 
 #Remove Groups
 #groupdel mqbrkrs
 #groupdel mqclient
-#groupdel mqm
+groupdel mqm
 
 #Remove MQ Packages
 rpm -qa | grep MQSeries | xargs rpm -ev 2>&1 > /dev/null

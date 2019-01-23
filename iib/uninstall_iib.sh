@@ -18,16 +18,16 @@ dltmqm QM1
 
 #Kill User Processes
 killall -9 -u iibuser
-killall -9 -u mqm
+#killall -9 -u mqm
 
 #Remove Users
 userdel --remove iibuser
-userdel --remove mqm
+#userdel --remove mqm
 
 #Remove Groups
 groupdel mqbrkrs
 groupdel mqclient
-groupdel mqm
+#groupdel mqm
 
 rm -rf /opt/ibm
 rm -rf /tmp/iib
