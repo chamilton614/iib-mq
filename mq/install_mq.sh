@@ -82,8 +82,10 @@ mkdir -p /opt/mqm
 #rpm -Uivh /tmp/mq/MQServer/MQSeriesSamples-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/rpm.log
 #rpm -Uivh /tmp/mq/MQServer/MQSeriesSDK-9.1.1-0.x86_64.rpm 2>&1 >> logs/mq/rpm.log
 
-echo rpm -ivh $DIR_RPM/$MQ_PACKAGES
-rpm -ivh $DIR_RPM/$MQ_PACKAGES
+#echo $DIR_RPM/$MQ_PACKAGES
+#rpm -ivh $DIR_RPM/$MQ_PACKAGES
+
+for x in $MQ_PACKAGES; do rpm -ivh $DIR_RPM/$x; done
 
 echo "Performing a Yum Update"
 yum -y update

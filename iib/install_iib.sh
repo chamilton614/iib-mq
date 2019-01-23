@@ -4,13 +4,26 @@ mkdir -p /tmp/iib
 mkdir -p /opt/ibm
 #cd /opt/ibm
 
+echo "exporting DIR_EXTRACT=/tmp/iib"
+export DIR_EXTRACT=/tmp/iib/
+mkdir -p $DIR_EXTRACT
+
 IIB_FILE=10.0.0.15-IIB.LINUX64-DEVELOPER.tar.gz
 IIB_URL="http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/$IIB_FILE"
 
 #Check if /iibdata/10.0.0.15-IIB-LINUX64-DEVELOPER.tar.gz exists, otherwise download it
+if [ -e "$DIR_EXTRACT/$IIB_FILE" ]
+then
+	echo "$DIR_EXTRACT/$IIB_FILE exists, no download required"
+else
+	echo "Downloading IIB to $DIR_EXTRACT"
+	#Download IIB to /tmp/iib
+	(cd $DIR_EXTRACT && curl -LO $IIB_URL)
+	#curl -LO https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev911_linux_x86-64.tar.gz
+fi
 
 #Download IIB
-(cd /tmp/iib && curl -LO $IIB_URL)
+(cd $DIR_EXTRACT && curl -LO $IIB_URL)
 #curl -LO http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.15-IIB-LINUX64-DEVELOPER.tar.gz
 
 #Extract IIB
