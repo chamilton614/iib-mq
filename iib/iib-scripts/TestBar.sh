@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# Stop the Node Broker IBNODE01
+mqsistop IBNODE01
+
+# Stop QM01 Queue Manager
+endmqm QM01
+
+# Delete the Node Broker IBNODE01
+mqsideletebroker IBNODE01
+
+# Delete QM01 Queue Manager
+dltmqm QM01
+
 # Creating QM1 Queue Manager
 crtmqm QM01
 
