@@ -1,3 +1,4 @@
+#!/bin/bash
 
 killall -9 -u iibmquser
 userdel --remove iibmquser
@@ -13,7 +14,6 @@ rm -f /var/log/syslog
 rm -rf /var/mqsi
 rm -rf /var/run/syslogd.pid
 
-read -p "Reset iptables? Ctrl+C to quit"
 iptables -P INPUT ACCEPT
 iptables -P FORWARD ACCEPT
 iptables -P OUTPUT ACCEPT

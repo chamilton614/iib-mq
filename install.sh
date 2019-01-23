@@ -4,9 +4,9 @@
 mkdir -p logs
 
 #Install MQ
-/mq/mq_install.sh | tee logs/install_mq.log 2>&1
+/mq/install_mq.sh | tee logs/install_mq.log 2>&1
 
 #Install IIB
-/iib/iib_install.sh | tee logs/install_iib.log 2>&1
+/iib/install_iib.sh | tee logs/install_iib.log 2>&1
 
 

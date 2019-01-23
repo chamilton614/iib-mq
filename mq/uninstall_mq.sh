@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #End MQ Activity
 /opt/mqm/bin/setmqenv -s
 dspmq -o installation
