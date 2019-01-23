@@ -80,8 +80,11 @@ monitor()
 	done
 }
 
+echo "License Check"
 license-check.sh
+echo "MQ Start"
 mq_start.sh
+echo "IIB Start"
 start_iib
 trap stop SIGTERM SIGINT
 monitor
