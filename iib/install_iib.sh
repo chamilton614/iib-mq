@@ -1,3 +1,4 @@
+#!/bin/bash
 
 # Install IIB v10.0.0.x Developer edition
 mkdir -p /tmp/iib
@@ -8,7 +9,8 @@ echo "exporting DIR_EXTRACT=/tmp/iib"
 export DIR_EXTRACT=/tmp/iib/
 mkdir -p $DIR_EXTRACT
 
-IIB_FILE=10.0.0.15-IIB.LINUX64-DEVELOPER.tar.gz
+IIB_VERSION=10.0.0.15
+IIB_FILE=${IIB_VERSION}-IIB.LINUX64-DEVELOPER.tar.gz
 IIB_URL="http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/$IIB_FILE"
 
 #Check if /iibdata/10.0.0.15-IIB-LINUX64-DEVELOPER.tar.gz exists, otherwise download it
@@ -29,12 +31,8 @@ fi
 #Extract IIB
 tar -Uzxvf /tmp/iib/$IIB_FILE -C /opt/ibm/ 2>&1 > /dev/null
 
-#Extract IIB from /iibdata
-#tar -Uzxvf /iibdata/10.0.0.11-IIB-LINUX64-DEVELOPER.tar.gz -C /opt/ibm/ 2>&1 > /dev/null
-
 #Launch Installer
-#/opt/ibm/iib-10.0.0.11/iib make registry global accept license silently
-/opt/ibm/iib-10.0.0.15/iib make registry global accept license silently
+/opt/ibm/iib-${IIB_VERSION}/iib make registry global accept license silently
 export LICENSE=accept
 
 # Configure system
@@ -56,16 +54,44 @@ iptables -I INPUT -p tcp --dport 4414 -j ACCEPT
 iptables -I INPUT -p tcp --dport 7800 -j ACCEPT
 iptables -I INPUT -p tcp --dport 1414 -j ACCEPT
 
+# Update ulimit for nofile
+echo *	hard	nofile	10250>> /etc/security/limits.conf
+echo *	soft	nofile	10250>> /etc/security/limits.conf
+
+#Copy IIB and MQ Scripts
+echo "Copy IIB and MQ Scripts"
+#cp /iibdata/mq-scripts/*.sh /usr/local/bin/
+cp iib-scripts/*.sh /usr/local/bin/
+chmod 755 /usr/local/bin/*.sh
+#cp /iibdata/mq-scripts/mq-config /etc/mqm/mq-config
+cp iib-scripts/mq-config /etc/mqm/mq-config
+chmod 755 /etc/mqm/mq-config
+
+#For IIB Service
+#cp /iibdata/mq-scripts/iibservice /etc/init.d/iibservice
+#cp mq-scripts/iibservice /etc/init.d/iibservice
+#chmod 755 /etc/init.d/iibservice
+
+#Update iibuser .bash_profile
+if [ ! -f "/opt/ibm/iibuserupdated" ]; then
+	touch /opt/ibm/iibuserupdated
+	echo export LICENSE=accept>> /home/iibuser/.bash_profile
+	echo PATH=$PATH:/opt/mqm/bin:/opt/mqm/samp/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /home/iibuser/.bash_profile
+	echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile>> /home/iibuser/.bash_profile
+	source /home/iibuser/.bash_profile
+fi
+
+#Run as iibuser
+runuser -l iibuser -c "mqsiservice -v"
+
 #Verify IIB
 #/opt/ibm/iib-10.0.0.11/iib verify all
-/opt/ibm/iib-10.0.0.15/iib verify all
+/opt/ibm/iib-${IIB_VERSION}/iib verify all
 
 # Set entrypoint to run management script
-read -p "Proceed to run iib_manage.sh? Ctrl+C to quit"
-iib_manage.sh
+#read -p "Proceed to run iib_manage.sh? Ctrl+C to quit"
+runuser -l iibuser -c "iib_manage.sh"
 
-#source /opt/ibm/iib-10.0.0.11/server/bin/mqsiprofile
-source /opt/ibm/iib-10.0.0.15/server/bin/mqsiprofile
-mqsiservice -v
+
 
 
