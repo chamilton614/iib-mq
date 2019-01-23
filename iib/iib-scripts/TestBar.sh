@@ -4,7 +4,7 @@ crtmqm QM01
 # Starting the QM1 Queue Manager
 strmqm QM01
 # Creating Integration Node with associate Queue Manager
-mqsicreatebroker IBNODE -q QM01
+mqsicreatebroker IBNODE01 -q QM01
 # stopping the Queue Manager
 endmqm QM01
 # Starting the Integration Node
@@ -12,17 +12,17 @@ endmqm QM01
 runmqsc QM01
 DEFINE QL(IN)
 DEFINE QL(OUT)
-mqsistart IBNODE
+mqsistart IBNODE01
 # Stopping the Integration Node
-mqsistop IBNODE
+mqsistop IBNODE01
 # Creating the Integration Servver/ Execution Group
-mqsicreateexecutiongroup IBNODE -e EG1
+mqsicreateexecutiongroup IBNODE01 -e EG01
 # Starting the message flow
-mqsistartmsgflow IBNODE -e EG1
+mqsistartmsgflow IBNODE01 -e EG01
 # Deploying the barfile in to integration server on the Integration Node
-mqsideploy IBNODE -e EG1 -a TestBar.bar -m -w 600
+mqsideploy IBNODE01 -e EG01 -a TestBar.bar -m -w 600
 # Creating the Sample Configurable Service
-mqsicreateconfigurableservice IBNODE -c ActivityLog -o SampleConfigService -n filter,fileName,minSeverityLevel,formatEntries,executionGroupFilter,numberOfLogs,enabled,maxFileSizeMb,maxAgeMins -v "","","INFO","false","","4","true","25","0"
+mqsicreateconfigurableservice IBNODE01 -c ActivityLog -o SampleConfigService -n filter,fileName,minSeverityLevel,formatEntries,executionGroupFilter,numberOfLogs,enabled,maxFileSizeMb,maxAgeMins -v "","","INFO","false","","4","true","25","0"
 # Testing the bar files after succesffuly deployed you can RFHUtil tool or command line as below.
 #Testing by putting message
 #Putting the message on IN queue
