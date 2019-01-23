@@ -19,8 +19,7 @@ IIB_FILE=${IIB_VERSION}-IIB.LINUX64-DEVELOPER.tar.gz
 IIB_URL="http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/${IIB_FILE}"
 
 #Check if /iibdata/10.0.0.15-IIB-LINUX64-DEVELOPER.tar.gz exists, otherwise download it
-if [ -e "${DIR_EXTRACT}/${IIB_FILE}" ]
-then
+if [ -e "${DIR_EXTRACT}/${IIB_FILE}" ]; then
 	echo "${DIR_EXTRACT}/${IIB_FILE} exists, no download required"
 else
 	echo "Downloading IIB to ${DIR_EXTRACT}"

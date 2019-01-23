@@ -44,7 +44,6 @@ else
 	echo "Downloading MQ to $DIR_EXTRACT"
 	#Download MQ to /tmp/mq
 	(cd ${DIR_EXTRACT} && curl -LO ${MQ_URL})
-	#curl -LO https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev911_linux_x86-64.tar.gz
 fi
 
 #Extract MQ
