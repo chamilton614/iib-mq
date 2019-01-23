@@ -32,9 +32,9 @@ rm -rf /opt/mqm
 rm -rf /var/mqm
 rm -rf /tmp/mq
 rm -rf /etc/mqm/mq-config
-rm -rf /etc/init.d/iibservice
-cd /iibdata/mq-scripts/
-for f in `ls *`
+#rm -rf /etc/init.d/iibservice
+cd iib/iib-scripts/
+for f in `ls *.sh`
 do
  echo "Removing $f"
  rm -rf /usr/local/bin/$f
