@@ -2,7 +2,7 @@
 
 #Get Current Scripts Directory
 CPWD=`pwd`
-read -p "CPWD is ${CPWD}"
+#read -p "CPWD is ${CPWD}"
 
 #Setup Logs directory
 mkdir -p ${CPWD}/logs

@@ -2,7 +2,7 @@
 
 #Get Current Scripts Directory
 CPWD=`pwd`
-read -p "CPWD is ${CPWD}"
+#read -p "CPWD is ${CPWD}"
 
 #Cleanup IBNODE01 and QM01
 #mqsistop IBNODE01

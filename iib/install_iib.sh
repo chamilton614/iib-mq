@@ -4,8 +4,7 @@
 
 #Get Current Scripts Directory
 CPWD=`pwd`
-
-read -p "CPWD is ${CPWD}"
+#read -p "CPWD is ${CPWD}"
 
 mkdir -p /tmp/iib
 mkdir -p /opt/ibm
@@ -61,12 +60,12 @@ echo *	soft	nofile	10250 >> /etc/security/limits.conf
 
 #Copy IIB and MQ Scripts
 echo "Copy IIB and MQ Scripts"
-cp ${CPWD}/iib-scripts/*.sh /usr/local/bin/
+cp ${CPWD}/iib/iib-scripts/*.sh /usr/local/bin/
 chmod 755 /usr/local/bin/*.sh
 echo "Copy Test.bar"
-cp ${CPWD}/iib-scripts/*.bar /usr/local/bin/
+cp ${CPWD}/iib/iib-scripts/*.bar /usr/local/bin/
 echo "Copy mq-config"
-cp ${CPWD}/iib-scripts/mq-config /etc/mqm/mq-config
+cp ${CPWD}/iib/iib-scripts/mq-config /etc/mqm/mq-config
 chmod 755 /etc/mqm/mq-config
 
 #For IIB Service

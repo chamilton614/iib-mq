@@ -4,7 +4,7 @@
 
 #Get Current Scripts Directory
 CPWD=`pwd`
-read -p "CPWD is ${CPWD}"
+#read -p "CPWD is ${CPWD}"
 
 mkdir -p ${CPWD}/logs/mq/
 
