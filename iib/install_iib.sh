@@ -6,6 +6,9 @@ echo "Installing IIB"
 echo "==================================="
 echo " "
 
+#DEBUG flag
+DEBUG=true
+
 #Get Current Scripts Directory
 CPWD=`pwd`
 #read -p "CPWD is ${CPWD}"
@@ -32,11 +35,23 @@ else
 fi
 
 #Extract IIB
-tar -Uzxvf ${DIR_EXTRACT}/${IIB_FILE} -C /opt/ibm/ 2>&1 > /dev/null
+#tar -Uzxvf ${DIR_EXTRACT}/${IIB_FILE} -C /opt/ibm/ 2>&1 > /dev/null
+tar -Uzxvf ${DIR_EXTRACT}/${IIB_FILE} --exclude iib-${IIB_VERSION}/tools -C /opt/ibm/ 2>&1 > /dev/null
 
 #Launch Installer
 /opt/ibm/iib-${IIB_VERSION}/iib make registry global accept license silently
 export LICENSE=accept
+
+#Verify the Installation
+/opt/ibm/iib-${IIB_VERSION}/iib verify all
+
+#Verify the Installation Version
+/opt/ibm/iib-${IIB_VERSION}/iib version
+
+#Check the DEBUG flag
+if [ "$DEBUG" == "true" ]; then
+	exit
+fi
 
 #Check Path
 if [ -e "${CPWD}/iib/configure_iib.sh" ]; then

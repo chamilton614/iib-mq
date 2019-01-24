@@ -69,13 +69,13 @@ chmod -R 755 /home/mqm
 
 #Create /var/mqm
 mkdir -p /var/mqm/
-chown -R mqm:mqm /var/mqm/
-chmod -R 755 /var/mqm/
+#chown -R mqm:mqm /var/mqm/
+#chmod -R 755 /var/mqm/
 
 #Create /etc/mqm/
 mkdir -p /etc/mqm/
-chown -R mqm:mqm /etc/mqm/
-chmod -R 755 /etc/mqm/
+#chown -R mqm:mqm /etc/mqm/
+#chmod -R 755 /etc/mqm/
 
 #MQ Packages to Install
 MQ_PACKAGES="MQSeriesRuntime-*.rpm MQSeriesServer-*.rpm MQSeriesJava*.rpm MQSeriesJRE*.rpm MQSeriesGSKit*.rpm MQSeriesMsg*.rpm MQSeriesSamples*.rpm MQSeriesAMS-*.rpm"
@@ -111,24 +111,24 @@ rm -rf /var/cache/yum/*
 # Clean up all the downloaded files
 rm -rf ${DIR_EXTRACT}
 
-#Update mqm .bash_profile
-if [ ! -f "/opt/mqm/mqmupdated" ] && [ -d "/home/mqm/" ]; then
-	touch /opt/mqm/mqmupdated
-	if ! `grep -q "LICENSE=accept" /home/mqm/.bash_profile`; then
-		echo "Exporting License"; echo export LICENSE=accept>> /home/mqm/.bash_profile
-	fi
-	if ! `grep -q ":/opt/mqm/bin:/opt/mqm/samp/bin" /home/mqm/.bash_profile`; then
-		echo "Updating PATH"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin>> /home/mqm/.bash_profile
-	fi
-	if ! `grep -q "source /opt/mqm/bin/setmqenv" /home/mqm/.bash_profile`; then
-		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /home/mqm/.bash_profile
-	fi
-	echo "Exporting Path"
-	sed -i '/export PATH/d' /home/mqm/.bash_profile
-	echo export PATH>> /home/mqm/.bash_profile
-	echo "Source /home/mqm/.bash_profile"
-	source /home/mqm/.bash_profile
-fi
+##Update mqm .bash_profile
+#if [ ! -f "/opt/mqm/mqmupdated" ] && [ -d "/home/mqm/" ]; then
+#	touch /opt/mqm/mqmupdated
+#	if ! `grep -q "LICENSE=accept" /home/mqm/.bash_profile`; then
+#		echo "Exporting License"; echo export LICENSE=accept>> /home/mqm/.bash_profile
+#	fi
+#	if ! `grep -q ":/opt/mqm/bin:/opt/mqm/samp/bin" /home/mqm/.bash_profile`; then
+#		echo "Updating PATH"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin>> /home/mqm/.bash_profile
+#	fi
+#	#if ! `grep -q "source /opt/mqm/bin/setmqenv" /home/mqm/.bash_profile`; then
+#	#	echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /home/mqm/.bash_profile
+#	#fi
+#	echo "Exporting Path"
+#	sed -i '/export PATH/d' /home/mqm/.bash_profile
+#	echo export PATH>> /home/mqm/.bash_profile
+#	echo "Source /home/mqm/.bash_profile"
+#	source /home/mqm/.bash_profile
+#fi
 
 #Update root .bash_profile
 if [ ! -f "/opt/mqm/rootupdated" ] && [ -d "/root/" ]; then
@@ -139,10 +139,12 @@ if [ ! -f "/opt/mqm/rootupdated" ] && [ -d "/root/" ]; then
 	if ! `grep -q ":/opt/mqm/bin:/opt/mqm/samp/bin" /root/.bash_profile`; then
 		echo "Updating PATH"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin>> /root/.bash_profile
 	fi
-	if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /root/.bash_profile`; then
-		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /root/.bash_profile
-	fi
-	echo "Exporting Path"
+	#if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /root/.bash_profile`; then
+	#	echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /root/.bash_profile
+	#fi
+	
+	#Moving the export PATH line to be the last line in the .bash_profile
+	echo "Moving export PATH"
 	sed -i '/export PATH/d' /root/.bash_profile
 	echo export PATH>> /root/.bash_profile
 	echo "Source /root/.bash_profile"

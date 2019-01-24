@@ -151,11 +151,11 @@ fi
 #runuser -l mqm -c "mqsiservice -v"
 
 #Run as iibuser
-runuser -l iibuser -c "mqsiservice -v"
+#runuser -l iibuser -c "mqsiservice -v"
 
 #Verify IIB
 #/opt/ibm/iib-10.0.0.11/iib verify all
-/opt/ibm/iib-${IIB_VERSION}/iib verify all
+#/opt/ibm/iib-${IIB_VERSION}/iib verify all
 
 # Set entrypoint to run management script to verify the installation
 iib_manage.sh
