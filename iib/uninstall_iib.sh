@@ -43,7 +43,7 @@ groupdel iibuser
 
 echo "Cleaning .bash_profile"
 sed -i '/export LICENSE=accept/d' /root/.bash_profile
-sed -i "s/:\/opt\/ibm\/iib-${IIB_VERSION}\/server\/bin//g" /root/.bash_profile
+sed -i "s/:\/opt\/ibm\/iib-.*\/server\/bin//g" /root/.bash_profile
 sed -i '/source \/opt\/mqm\/bin\/setmqenv -s/d' /root/.bash_profile
 sed -i '/source \/opt\/ibm\/iib-/d' /root/.bash_profile
 
