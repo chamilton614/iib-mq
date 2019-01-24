@@ -121,6 +121,10 @@ if [ ! -f "/opt/ibm/iibuserupdated" ] && [ -d "/home/iibuser/" ]; then
 	if ! `grep -q "LICENSE=accept" /home/iibuser/.bash_profile`; then
 		echo "Adding LICENSE variable for iibuser user"; echo export LICENSE=accept>> /home/iibuser/.bash_profile
 	fi
+	if ! `grep -q ":/usr/local/bin" /root/.bash_profile`; then
+	#	echo "Updating PATH with /usr/local/bin"; echo PATH='$PATH':/usr/local/bin>> /root/.bash_profile
+		echo "Updating PATH with /usr/local/bin"; sed -i '/^PATH/s/$/:\/usr\/local\/bin/' /root/.bash_profile
+	fi
 	if ! `grep -q ":/opt/mqm/bin:/opt/mqm/samp/bin" /home/iibuser/.bash_profile`; then
 	#	echo "Updating PATH with mqm directories"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin>> /home/iibuser/.bash_profile
 		echo "Updating PATH with mqm directories for iibuser user"; sed -i '/^PATH/s/$/:\/opt\/mqm\/bin:\/opt\/mqm\/samp\/bin/' /home/iibuser/.bash_profile
