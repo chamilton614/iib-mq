@@ -1,4 +1,10 @@
 #!/bin/bash
+# Uninstall process for MQ
+echo " "
+echo "==================================="
+echo "Uninstalling MQ"
+echo "==================================="
+echo " "
 
 #Get Current Scripts Directory
 CPWD=`pwd`

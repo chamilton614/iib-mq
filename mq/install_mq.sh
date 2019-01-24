@@ -1,6 +1,10 @@
 #!/bin/bash
-
-# Install MQ v9.1.1.x Developer edition
+# Install process for MQ
+echo " "
+echo "==================================="
+echo "Installing MQ"
+echo "==================================="
+echo " "
 
 #Get Current Scripts Directory
 CPWD=`pwd`
@@ -128,9 +132,13 @@ find /opt/mqm/ -name '*.tar.gz' -delete
 
 #Create /var/mqm
 mkdir -p /var/mqm/
+chown -R mqm:mqm /var/mqm/
+chmod -R 755 /var/mqm/
 
 #Create /etc/mqm/
 mkdir -p /etc/mqm/
+chown -R mqm:mqm /etc/mqm/
+chmod -R 755 /etc/mqm/
 
 # Recommended: Set the default MQ installation (makes the MQ commands available on the PATH)
 /opt/mqm/bin/setmqinst -p /opt/mqm/ -i

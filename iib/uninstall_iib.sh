@@ -1,4 +1,10 @@
 #!/bin/bash
+# Uninstall process for IIB
+echo " "
+echo "==================================="
+echo "Uninstalling IIB"
+echo "==================================="
+echo " "
 
 #Get Current Scripts Directory
 CPWD=`pwd`
@@ -13,9 +19,9 @@ mqsideletebroker IBNODE01
 dltmqm QM01
 
 #Cleanup IIBV10NODE1 and QM1
-mqsistop IIBV10NODE1
+mqsistop IIBV10NODE
 endmqm QM1
-mqsideletebroker IIBV10NODE1
+mqsideletebroker IIBV10NODE
 dltmqm QM1
 
 #Kill User Processes
@@ -44,7 +50,10 @@ rm -rf /opt/ibm
 rm -rf /tmp/iib
 rm -f /var/log/syslog
 rm -rf /var/mqsi
-rm -rf /var/run/syslogd.pid
+#rm -rf /var/run/syslogd.pid
+
+# Kill the rsyslogd process
+kill $(cat /var/run/syslogd.pid | awk '{ print $1 }')
 
 iptables -P INPUT ACCEPT
 iptables -P FORWARD ACCEPT

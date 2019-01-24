@@ -1,4 +1,10 @@
 #!/bin/bash
+# Install process for MQ and IIB
+echo " "
+echo "==================================="
+echo "Installing MQ and IIB"
+echo "==================================="
+echo " "
 
 #Get Current Scripts Directory
 CPWD=`pwd`
@@ -31,5 +37,8 @@ else
 	fi
 fi
 
-echo ""
+echo " "
+echo "========================================="
 echo "Install of IIB and MQ has been completed"
+echo "========================================="
+echo " "

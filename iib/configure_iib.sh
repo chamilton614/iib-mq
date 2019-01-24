@@ -1,6 +1,10 @@
 #!/bin/bash
-
-# Configure IIB v10.0.0.x Developer edition
+# Configure process for IIB
+echo " "
+echo "==================================="
+echo "IConfiguring IIB"
+echo "==================================="
+echo " "
 
 #Get Current Scripts Directory
 CPWD=`pwd`
@@ -153,7 +157,21 @@ runuser -l iibuser -c "mqsiservice -v"
 #/opt/ibm/iib-10.0.0.11/iib verify all
 /opt/ibm/iib-${IIB_VERSION}/iib verify all
 
-# Set entrypoint to run management script
-#read -p "Proceed to run iib_manage.sh? Ctrl+C to quit"
-runuser -l iibuser -c "iib_manage.sh"
+# Set entrypoint to run management script to verify the installation
+iib_manage.sh
+
+# Stop the Node and QueueManager
+stop_node.sh
+
+# Delete the IIB Node
+mqsideletebroker IIBV10NODE1
+# Delete the QueueManager
+dltmqm QM1
+
+# Start IIB and MQ as iibuser
+#runuser -l iibuser -c "iib_manage.sh"
+
+
+
+
 

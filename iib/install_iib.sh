@@ -1,6 +1,10 @@
 #!/bin/bash
-
-# Install IIB v10.0.0.x Developer edition
+# Install process for IIB
+echo " "
+echo "==================================="
+echo "Installing IIB"
+echo "==================================="
+echo " "
 
 #Get Current Scripts Directory
 CPWD=`pwd`

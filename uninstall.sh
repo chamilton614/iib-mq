@@ -1,4 +1,10 @@
 #!/bin/bash
+# Uninstall process for MQ and IIB
+echo " "
+echo "==================================="
+echo "Uninstalling MQ and IIB"
+echo "==================================="
+echo " "
 
 #Get Current Scripts Directory
 CPWD=`pwd`
@@ -31,7 +37,8 @@ else
 	fi
 fi
 
-echo ""
+echo " "
+echo "==========================================="
 echo "Uninstall of IIB and MQ has been completed"
-
-
+echo "==========================================="
+echo " "
