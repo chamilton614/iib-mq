@@ -6,6 +6,9 @@ echo "Installing MQ"
 echo "==================================="
 echo " "
 
+#DEBUG flag
+DEBUG=false
+
 #Get Current Scripts Directory
 CPWD=`pwd`
 #read -p "CPWD is ${CPWD}"
@@ -134,10 +137,10 @@ rm -rf ${DIR_EXTRACT}
 if [ ! -f "/opt/mqm/rootupdated" ] && [ -d "/root/" ]; then
 	touch /opt/mqm/rootupdated
 	if ! `grep -q "LICENSE=accept" /root/.bash_profile`; then
-		echo "Exporting License"; echo export LICENSE=accept>> /root/.bash_profile
+		echo "Setting LICENSE variable to .bash_profile"; echo export LICENSE=accept>> /root/.bash_profile
 	fi
 	if ! `grep -q ":/opt/mqm/bin:/opt/mqm/samp/bin" /root/.bash_profile`; then
-		echo "Updating PATH"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin>> /root/.bash_profile
+		echo "Updating PATH with mqm directories"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin>> /root/.bash_profile
 	fi
 	#if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /root/.bash_profile`; then
 	#	echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /root/.bash_profile

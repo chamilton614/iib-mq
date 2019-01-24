@@ -6,6 +6,9 @@ echo "Configuring IIB"
 echo "==================================="
 echo " "
 
+#DEBUG flag
+DEBUG=false
+
 #Get Current Scripts Directory
 CPWD=`pwd`
 
