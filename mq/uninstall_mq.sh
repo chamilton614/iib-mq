@@ -33,7 +33,7 @@ gpasswd -d root mqm
 
 #Remove Groups
 #groupdel mqbrkrs
-#groupdel mqclient
+groupdel mqclient
 groupdel mqm
 
 echo "Cleaning .bash_profile"

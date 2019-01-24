@@ -67,6 +67,50 @@ mkdir -p /home/mqm
 chown -R mqm:mqm /home/mqm
 chmod -R 755 /home/mqm
 
+#Create /var/mqm
+mkdir -p /var/mqm/
+chown -R mqm:mqm /var/mqm/
+chmod -R 755 /var/mqm/
+
+#Create /etc/mqm/
+mkdir -p /etc/mqm/
+chown -R mqm:mqm /etc/mqm/
+chmod -R 755 /etc/mqm/
+
+#MQ Packages to Install
+MQ_PACKAGES="MQSeriesRuntime-*.rpm MQSeriesServer-*.rpm MQSeriesJava*.rpm MQSeriesJRE*.rpm MQSeriesGSKit*.rpm MQSeriesMsg*.rpm MQSeriesSamples*.rpm MQSeriesAMS-*.rpm"
+
+# Find directory containing .rpm files
+export DIR_RPM=$(find ${DIR_EXTRACT} -name "*.rpm" -printf "%h\n" | sort -u | head -1)
+
+# Find location of mqlicense.sh
+export MQLICENSE=$(find ${DIR_EXTRACT} -name "mqlicense.sh")
+
+# Accept the MQ license
+echo ${MQLICENSE}
+${MQLICENSE} -text_only -accept
+
+# Install MQ using the RPM packages
+echo "Installing the RPM Packages"
+mkdir -p /opt/mqm
+for x in ${MQ_PACKAGES}; do rpm -ivh ${DIR_RPM}/$x; done
+
+echo "Performing a Yum Update"
+yum -y update
+
+# Remove tar.gz files unpacked by RPM postinst scripts
+find /opt/mqm/ -name '*.tar.gz' -delete
+
+# Recommended: Set the default MQ installation (makes the MQ commands available on the PATH)
+/opt/mqm/bin/setmqinst -p /opt/mqm/ -i
+
+# Clean up yum files
+yum -y clean all
+rm -rf /var/cache/yum/*
+
+# Clean up all the downloaded files
+rm -rf ${DIR_EXTRACT}
+
 #Update mqm .bash_profile
 if [ ! -f "/opt/mqm/mqmupdated" ] && [ -d "/home/mqm/" ]; then
 	touch /opt/mqm/mqmupdated
@@ -104,51 +148,6 @@ if [ ! -f "/opt/mqm/rootupdated" ] && [ -d "/root/" ]; then
 	echo "Source /root/.bash_profile"
 	source /root/.bash_profile
 fi
-
-
-#MQ Packages to Install
-MQ_PACKAGES="MQSeriesRuntime-*.rpm MQSeriesServer-*.rpm MQSeriesJava*.rpm MQSeriesJRE*.rpm MQSeriesGSKit*.rpm MQSeriesMsg*.rpm MQSeriesSamples*.rpm MQSeriesAMS-*.rpm"
-
-# Find directory containing .rpm files
-export DIR_RPM=$(find ${DIR_EXTRACT} -name "*.rpm" -printf "%h\n" | sort -u | head -1)
-
-# Find location of mqlicense.sh
-export MQLICENSE=$(find ${DIR_EXTRACT} -name "mqlicense.sh")
-
-# Accept the MQ license
-echo ${MQLICENSE}
-${MQLICENSE} -text_only -accept
-
-# Install MQ using the RPM packages
-echo "Installing the RPM Packages"
-mkdir -p /opt/mqm
-for x in ${MQ_PACKAGES}; do rpm -ivh ${DIR_RPM}/$x; done
-
-echo "Performing a Yum Update"
-yum -y update
-
-# Remove tar.gz files unpacked by RPM postinst scripts
-find /opt/mqm/ -name '*.tar.gz' -delete
-
-#Create /var/mqm
-mkdir -p /var/mqm/
-chown -R mqm:mqm /var/mqm/
-chmod -R 755 /var/mqm/
-
-#Create /etc/mqm/
-mkdir -p /etc/mqm/
-chown -R mqm:mqm /etc/mqm/
-chmod -R 755 /etc/mqm/
-
-# Recommended: Set the default MQ installation (makes the MQ commands available on the PATH)
-/opt/mqm/bin/setmqinst -p /opt/mqm/ -i
-
-# Clean up yum files
-yum -y clean all
-rm -rf /var/cache/yum/*
-
-# Clean up all the downloaded files
-rm -rf ${DIR_EXTRACT}
 
 
 
