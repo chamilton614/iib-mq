@@ -1,6 +1,6 @@
 #!/bin/bash
 ###################################
-#Script Name: stop_node.sh
+#Script Name: delete_node.sh
 #Created By: Prolifics
 ###################################
 
@@ -18,4 +18,7 @@ echo "Stopping node $NODENAME..."
 endmqm $MQ_QMGR_NAME
 # Kill the rsyslogd process
 kill $(cat /var/run/syslogd.pid | awk '{ print $1 }')
+echo "----------------------------------------"
+echo "Deleting node $NODENAME..."
+mqsideletebroker $NODENAME
 exit

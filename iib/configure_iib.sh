@@ -164,7 +164,7 @@ iib_manage.sh
 stop_node.sh
 
 # Delete the IIB Node
-mqsideletebroker IIBV10NODE1
+mqsideletebroker IIBV10NODE
 # Delete the QueueManager
 dltmqm QM1
 
