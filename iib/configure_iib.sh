@@ -97,7 +97,7 @@ if [ ! -f "/opt/ibm/rootupdated" ] && [ -d "/root" ]; then
 	fi
 	echo "Exporting Path"
 	sed -i '/export PATH/d' /root/.bash_profile
-	echo export $PATH>> /root/.bash_profile
+	echo export PATH>> /root/.bash_profile
 	echo "Source /root/.bash_profile"
 	source /root/.bash_profile
 fi
@@ -117,7 +117,7 @@ if [ ! -f "/opt/ibm/mqmupdated" ] && [ -d "/home/mqm/" ]; then
 	fi
 	echo "Exporting Path"
 	sed -i '/export PATH/d' /home/mqm/.bash_profile
-	echo export $PATH>> /home/mqm/.bash_profile
+	echo export PATH>> /home/mqm/.bash_profile
 	echo "Source /home/mqm/.bash_profile"
 	source /home/mqm/.bash_profile
 fi
@@ -142,7 +142,7 @@ if [ ! -f "/opt/ibm/iibuserupdated" ] && [ -d "/home/iibuser/" ]; then
 	fi
 	echo "Exporting Path"
 	sed -i '/export PATH/d' /home/iibuser/.bash_profile
-	echo export $PATH>> /home/iibuser/.bash_profile
+	echo export PATH>> /home/iibuser/.bash_profile
 	echo "Source /home/iibuser/.bash_profile"
 	source /home/iibuser/.bash_profile
 fi

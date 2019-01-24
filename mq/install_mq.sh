@@ -81,7 +81,7 @@ if [ ! -f "/opt/mqm/mqmupdated" ] && [ -d "/home/mqm/" ]; then
 	fi
 	echo "Exporting Path"
 	sed -i '/export PATH/d' /home/mqm/.bash_profile
-	echo export $PATH>> /home/mqm/.bash_profile
+	echo export PATH>> /home/mqm/.bash_profile
 	echo "Source /home/mqm/.bash_profile"
 	source /home/mqm/.bash_profile
 fi
@@ -100,7 +100,7 @@ if [ ! -f "/opt/mqm/rootupdated" ] && [ -d "/root/" ]; then
 	fi
 	echo "Exporting Path"
 	sed -i '/export PATH/d' /root/.bash_profile
-	echo export $PATH>> /root/.bash_profile
+	echo export PATH>> /root/.bash_profile
 	echo "Source /root/.bash_profile"
 	source /root/.bash_profile
 fi

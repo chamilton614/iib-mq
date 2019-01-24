@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Source the User .bash_profile
-source ~/.bash_profile
+#source ~/.bash_profile
 
 # Stop the Node Broker IBNODE01
 mqsistop IBNODE01
@@ -43,7 +43,7 @@ mqsicreateexecutiongroup IBNODE01 -e EG01
 # Starting the message flow
 mqsistartmsgflow IBNODE01 -e EG01
 
-# Deploying the barfile in to integration server on the Integration Node
+# Deploying the barfile into integration server on the Integration Node
 mqsideploy IBNODE01 -e EG01 -a /usr/local/bin/TestBar.bar -m -w 600
 
 # Creating the Sample Configurable Service
