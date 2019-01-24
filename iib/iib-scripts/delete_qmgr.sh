@@ -17,7 +17,9 @@ echo "----------------------------------------"
 echo "Stopping node $NODENAME..."
 endmqm $MQ_QMGR_NAME
 # Kill the rsyslogd process
-sudo kill $(cat /var/run/syslogd.pid | awk '{ print $1 }')
+if [ -e /var/run/syslogd.pid ]; then
+	sudo kill $(cat /var/run/syslogd.pid | awk '{ print $1 }')
+fi
 echo "----------------------------------------"
 echo "Deleting node $MQ_QMGR_NAME..."
 dltmqm $MQ_QMGR_NAME

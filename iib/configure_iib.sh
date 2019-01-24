@@ -160,8 +160,9 @@ runuser -l iibuser -c "mqsiservice -v"
 # Set entrypoint to run management script to verify the installation
 iib_manage.sh
 
-# Stop the Node and QueueManager
-stop_node.sh
+#Cleanup IIBV10NODE1 and QM1
+mqsistop IIBV10NODE
+endmqm QM1
 
 # Delete the IIB Node
 mqsideletebroker IIBV10NODE
