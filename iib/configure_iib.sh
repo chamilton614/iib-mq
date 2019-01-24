@@ -19,6 +19,12 @@ usermod -aG mqbrkrs,mqclient root
 #Set iibuser
 echo -e "iibuser\niibuser" | passwd iibuser
 
+#Update Ownership on IIB Directories
+chown -R iibuser:mqbrkrs /opt/ibm/
+chmod -R 755 /opt/ibm/
+chown -R iibuser:mqbrkrs /var/mqsi/
+chmod -R 755 /var/mqsi/
+
 #Update the sudoers for iibuser
 # To uncomment the passwordless entry
 sed -i 's/\# \%wheel/\%wheel/' /etc/sudoers
@@ -79,7 +85,7 @@ if [ ! -f "/opt/ibm/rootupdated" ] && [ -d "/root" ]; then
 	if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /root/.bash_profile`; then
 		echo "Updating PATH"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin >> /root/.bash_profile
 	fi
-	if ! `grep -q "source /opt/mqm/bin/setmqenv" /root/.bash_profile`; then
+	if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /root/.bash_profile`; then
 		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s" >> /root/.bash_profile
 	fi
 	if ! `grep -q "source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile" /root/.bash_profile`; then
@@ -99,7 +105,7 @@ if [ ! -f "/opt/ibm/mqmupdated" ] && [ -d "/home/mqm/" ]; then
 	if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /home/mqm/.bash_profile`; then
 		echo "Updating PATH"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin >> /home/mqm/.bash_profile
 	fi
-	if ! `grep -q "source /opt/mqm/bin/setmqenv" /home/mqm/.bash_profile`; then
+	if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /home/mqm/.bash_profile`; then
 		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s" >> /home/mqm/.bash_profile
 	fi
 	if ! `grep -q "source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile" /home/mqm/.bash_profile`; then
@@ -121,7 +127,7 @@ if [ ! -f "/opt/ibm/iibuserupdated" ] && [ -d "/home/iibuser/" ]; then
 	if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /home/iibuser/.bash_profile`; then
 		echo "Updating PATH"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin >> /home/iibuser/.bash_profile
 	fi
-	if ! `grep -q "source /opt/mqm/bin/setmqenv" /home/iibuser/.bash_profile`; then
+	if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /home/iibuser/.bash_profile`; then
 		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s" >> /home/iibuser/.bash_profile
 	fi
 	if ! `grep -q "source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile" /home/iibuser/.bash_profile`; then
@@ -135,7 +141,7 @@ if [ ! -f "/opt/ibm/iibuserupdated" ] && [ -d "/home/iibuser/" ]; then
 fi
 
 #Run as mqm
-runuser -l mqm -c "mqsiservice -v"
+#runuser -l mqm -c "mqsiservice -v"
 
 #Run as iibuser
 runuser -l iibuser -c "mqsiservice -v"
