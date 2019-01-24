@@ -15,19 +15,20 @@ CPWD=`pwd`
 #IIB Installed Version
 IIB_VERSION=10.0.0.15
 
-# Create user to run as
+#Create iib group mqbrkrs
 #groupadd -f mqbrkrs already exists from installer
 
-#groupadd -f mqclient
-#useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo,mqm,mqclient iibuser
-useradd iibuser
-#usermod -aG mqbrkrs,mqm,mqclient,wheel iibuser
-usermod -aG mqbrkrs,mqm,wheel iibuser
-#usermod -aG mqbrkrs,mqclient root
-usermod -aG mqbrkrs root
-
-#Set iibuser
-echo -e "iibuser\niibuser" | passwd iibuser
+#Create iibuser and Groups
+if [ ! `cat /etc/passwd | grep iibuser` ]; then
+   #useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo,mqm,mqclient iibuser
+   useradd iibuser -g iibuser --home-dir /home/iibuser
+   #Set iibuser
+   echo -e "iibuser\niibuser" | passwd iibuser
+   # Create Groups and Memberships
+   groupadd -f mqclient
+   usermod -aG mqbrkrs,mqm,mqclient,wheel iibuser
+   usermod -aG mqbrkrs,mqclient root
+fi
 
 #Update Ownership on IIB Directories
 chown -R iibuser:mqbrkrs /opt/ibm/
@@ -97,7 +98,7 @@ if [ ! -f "/opt/ibm/rootupdated" ] && [ -d "/root" ]; then
 	if ! `grep -q "source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile" /root/.bash_profile`; then
 		echo "Setting source mqsiprofile"; echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile>> /root/.bash_profile
 	fi
-	echo "Exporting Path"
+	echo "Moving export PATH"
 	sed -i '/export PATH/d' /root/.bash_profile
 	echo export PATH>> /root/.bash_profile
 	#echo "Source /root/.bash_profile"
@@ -124,7 +125,7 @@ if [ ! -f "/opt/ibm/iibuserupdated" ] && [ -d "/home/iibuser/" ]; then
 	if ! `grep -q "source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile" /home/iibuser/.bash_profile`; then
 		echo "Setting source mqsiprofile"; echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile>> /home/iibuser/.bash_profile
 	fi
-	echo "Exporting Path"
+	echo "Moving export PATH"
 	sed -i '/export PATH/d' /home/iibuser/.bash_profile
 	echo export PATH>> /home/iibuser/.bash_profile
 	#echo "Source /home/iibuser/.bash_profile"
