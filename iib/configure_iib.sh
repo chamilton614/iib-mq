@@ -124,6 +124,9 @@ if [ ! -f "/opt/ibm/iibuserupdated" ] && [ -d "/home/iibuser/" ]; then
 	if ! `grep -q "LICENSE=accept" /home/iibuser/.bash_profile`; then
 		echo "Exporting License"; echo export LICENSE=accept >> /home/iibuser/.bash_profile
 	fi
+	if ! `grep -q ":/opt/mqm/bin:/opt/mqm/samp/bin" /home/iibuser/.bash_profile`; then
+		echo "Updating PATH"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin >> /home/iibuser/.bash_profile
+	fi
 	if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /home/iibuser/.bash_profile`; then
 		echo "Updating PATH"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin >> /home/iibuser/.bash_profile
 	fi
