@@ -16,7 +16,8 @@ CPWD=`pwd`
 IIB_VERSION=10.0.0.15
 
 # Create user to run as
-groupadd -f mqbrkrs
+#groupadd -f mqbrkrs already exists from installer
+
 groupadd -f mqclient
 #useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo,mqm,mqclient iibuser
 useradd iibuser
@@ -89,26 +90,29 @@ if [ ! -f "/opt/ibm/rootupdated" ] && [ -d "/root" ]; then
 	if ! `grep -q "LICENSE=accept" /root/.bash_profile`; then
 		echo "Exporting License"; echo export LICENSE=accept>> /root/.bash_profile
 	fi
-	if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /root/.bash_profile`; then
-		echo "Updating PATH"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /root/.bash_profile
-	fi
-	if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /root/.bash_profile`; then
-		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /root/.bash_profile
-	fi
+	#if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /root/.bash_profile`; then
+	#	echo "Updating PATH with iib directories"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /root/.bash_profile
+	#	echo "Updating PATH with mqm directories"; sed -i '/^PATH/s/$/:/opt/ibm/iib-${IIB_VERSION}/server/bin/' /root/.bash_profile
+	#fi
+	#if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /root/.bash_profile`; then
+	#	echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /root/.bash_profile
+	#fi
 	if ! `grep -q "source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile" /root/.bash_profile`; then
 		echo "Setting source mqsiprofile"; echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile>> /root/.bash_profile
 	fi
 	echo "Exporting Path"
 	sed -i '/export PATH/d' /root/.bash_profile
 	echo export PATH>> /root/.bash_profile
-	echo "Source /root/.bash_profile"
-	source /root/.bash_profile
+	#echo "Source /root/.bash_profile"
+	#source /root/.bash_profile
 fi
 
 #Update mqm .bash_profile
 if [ ! -f "/opt/ibm/mqmupdated" ] && [ -d "/home/mqm/" ]; then
 	touch /opt/ibm/mqmupdated
-	#echo export LICENSE=accept >> /home/mqm/.bash_profile
+	if ! `grep -q "LICENSE=accept" /home/mqm/.bash_profile`; then
+		echo "Exporting License"; echo export LICENSE=accept>> /home/mqm/.bash_profile
+	fi
 	if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /home/mqm/.bash_profile`; then
 		echo "Updating PATH"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /home/mqm/.bash_profile
 	fi

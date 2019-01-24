@@ -47,8 +47,6 @@ sed -i '/source \/opt\/mqm\/bin\/setmqenv -s/d' /root/.bash_profile
 sed -i '/source \/opt\/ibm\/iib-/d' /root/.bash_profile
 
 rm -rf /opt/ibm
-rm -rf /tmp/iib
-rm -f /tmp/iib-*
 rm -f /var/log/syslog
 rm -rf /var/mqsi
 

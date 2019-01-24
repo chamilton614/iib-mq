@@ -35,8 +35,8 @@ else
 fi
 
 #Extract IIB
-#tar -Uzxvf ${DIR_EXTRACT}/${IIB_FILE} -C /opt/ibm/ 2>&1 > /dev/null
-tar -Uzxvf ${DIR_EXTRACT}/${IIB_FILE} --exclude iib-${IIB_VERSION}/tools -C /opt/ibm/ 2>&1 > /dev/null
+tar -Uzxvf ${DIR_EXTRACT}/${IIB_FILE} -C /opt/ibm/ 2>&1 > /dev/null
+#tar -Uzxvf ${DIR_EXTRACT}/${IIB_FILE} --exclude iib-${IIB_VERSION}/tools -C /opt/ibm/ 2>&1 > /dev/null
 
 #Launch Installer
 /opt/ibm/iib-${IIB_VERSION}/iib make registry global accept license silently
@@ -47,6 +47,13 @@ export LICENSE=accept
 
 #Verify the Installation Version
 /opt/ibm/iib-${IIB_VERSION}/iib version
+
+#Setup the Environment for the User
+source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile
+
+# Clean up all the downloaded files
+rm -rf ${DIR_EXTRACT}
+rm -f /tmp/iib-*
 
 #Check the DEBUG flag
 if [ "$DEBUG" == "true" ]; then

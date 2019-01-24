@@ -56,29 +56,10 @@ fi
 #Extract MQ
 tar -zxvf ${DIR_EXTRACT}/${MQ_FILE} -C ${DIR_EXTRACT}/ 2>&1 > /dev/null
 
-#Extract MQ from /iibdata
-#tar -zxvf /iibdata/mqadv_dev911_linux_x86-64.tar.gz -C /tmp/mq 2>&1 > /dev/null
-
 # Recommended: Create the mqm user ID with a fixed UID and group, so that the file permissions work between different images
 groupadd --system --gid 980 mqm
 useradd --system --uid 980 --gid mqm mqm
-#usermod -G mqm root
 usermod -aG mqm root
-
-# Create Home directory for .bash_profile
-mkdir -p /home/mqm
-chown -R mqm:mqm /home/mqm
-chmod -R 755 /home/mqm
-
-#Create /var/mqm
-mkdir -p /var/mqm/
-#chown -R mqm:mqm /var/mqm/
-#chmod -R 755 /var/mqm/
-
-#Create /etc/mqm/
-mkdir -p /etc/mqm/
-#chown -R mqm:mqm /etc/mqm/
-#chmod -R 755 /etc/mqm/
 
 #MQ Packages to Install
 MQ_PACKAGES="MQSeriesRuntime-*.rpm MQSeriesServer-*.rpm MQSeriesJava*.rpm MQSeriesJRE*.rpm MQSeriesGSKit*.rpm MQSeriesMsg*.rpm MQSeriesSamples*.rpm MQSeriesAMS-*.rpm"
@@ -106,6 +87,40 @@ find /opt/mqm/ -name '*.tar.gz' -delete
 
 # Recommended: Set the default MQ installation (makes the MQ commands available on the PATH)
 /opt/mqm/bin/setmqinst -p /opt/mqm/ -i
+
+# Create Home directory for .bash_profile
+#mkdir -p /home/mqm
+#chown -R mqm:mqm /home/mqm
+#chmod -R 755 /home/mqm
+
+# Remove the directory structure under /var/mqm which was created by the installer
+rm -rf /var/mqm
+
+# Create the mount point for volumes
+mkdir -p /mnt/mqm
+
+# Create the directory for MQ configuration files
+mkdir -p /etc/mqm
+
+# Create a symlink for /var/mqm -> /mnt/mqm/data
+ln -s /mnt/mqm/data /var/mqm
+
+#Create /var/mqm
+#mkdir -p /var/mqm/
+#chown -R mqm:mqm /var/mqm/
+#chmod -R 755 /var/mqm/
+
+#Create /etc/mqm/
+#mkdir -p /etc/mqm/
+#chown -R mqm:mqm /etc/mqm/
+#chmod -R 755 /etc/mqm/
+
+#Setup the Environment for the User
+source /opt/mqm/bin/setmqenv -s
+
+#Verify the Installation Version
+dspmqver
+
 
 # Clean up yum files
 yum -y clean all
@@ -139,19 +154,22 @@ if [ ! -f "/opt/mqm/rootupdated" ] && [ -d "/root/" ]; then
 	if ! `grep -q "LICENSE=accept" /root/.bash_profile`; then
 		echo "Setting LICENSE variable to .bash_profile"; echo export LICENSE=accept>> /root/.bash_profile
 	fi
-	if ! `grep -q ":/opt/mqm/bin:/opt/mqm/samp/bin" /root/.bash_profile`; then
-		echo "Updating PATH with mqm directories"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin>> /root/.bash_profile
-	fi
-	#if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /root/.bash_profile`; then
-	#	echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /root/.bash_profile
+	#sed -i '/^PATH/s/$/<stuff to add>/' <FILE>
+	#if ! `grep -q ":/opt/mqm/bin:/opt/mqm/samp/bin" /root/.bash_profile`; then
+	#	echo "Updating PATH with mqm directories"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin>> /root/.bash_profile
+	#	echo "Updating PATH with mqm directories"; sed -i '/^PATH/s/$/:/opt/mqm/bin:/opt/mqm/samp/bin/' /root/.bash_profile
 	#fi
+	
+	if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /root/.bash_profile`; then
+		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /root/.bash_profile
+	fi
 	
 	#Moving the export PATH line to be the last line in the .bash_profile
 	echo "Moving export PATH"
 	sed -i '/export PATH/d' /root/.bash_profile
 	echo export PATH>> /root/.bash_profile
-	echo "Source /root/.bash_profile"
-	source /root/.bash_profile
+	#echo "Source /root/.bash_profile"
+	#source /root/.bash_profile
 fi
 
 
