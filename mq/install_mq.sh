@@ -121,7 +121,6 @@ source /opt/mqm/bin/setmqenv -s
 #Verify the Installation Version
 dspmqver
 
-
 # Clean up yum files
 yum -y clean all
 rm -rf /var/cache/yum/*
@@ -155,11 +154,10 @@ if [ ! -f "/opt/mqm/rootupdated" ] && [ -d "/root/" ]; then
 		echo "Setting LICENSE variable to .bash_profile"; echo export LICENSE=accept>> /root/.bash_profile
 	fi
 	#sed -i '/^PATH/s/$/<stuff to add>/' <FILE>
-	#if ! `grep -q ":/opt/mqm/bin:/opt/mqm/samp/bin" /root/.bash_profile`; then
+	if ! `grep -q ":/opt/mqm/bin:/opt/mqm/samp/bin" /root/.bash_profile`; then
 	#	echo "Updating PATH with mqm directories"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin>> /root/.bash_profile
-	#	echo "Updating PATH with mqm directories"; sed -i '/^PATH/s/$/:/opt/mqm/bin:/opt/mqm/samp/bin/' /root/.bash_profile
-	#fi
-	
+		echo "Updating PATH with mqm directories"; sed -i '/^PATH/s/$/:\/opt\/mqm\/bin:\/opt\/mqm\/samp\/bin/' /root/.bash_profile
+	fi
 	if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /root/.bash_profile`; then
 		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /root/.bash_profile
 	fi

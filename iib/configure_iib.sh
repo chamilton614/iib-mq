@@ -18,11 +18,13 @@ IIB_VERSION=10.0.0.15
 # Create user to run as
 #groupadd -f mqbrkrs already exists from installer
 
-groupadd -f mqclient
+#groupadd -f mqclient
 #useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo,mqm,mqclient iibuser
 useradd iibuser
-usermod -aG mqbrkrs,mqm,mqclient,wheel iibuser
-usermod -aG mqbrkrs,mqclient root
+#usermod -aG mqbrkrs,mqm,mqclient,wheel iibuser
+usermod -aG mqbrkrs,mqm,wheel iibuser
+#usermod -aG mqbrkrs,mqclient root
+usermod -aG mqbrkrs root
 
 #Set iibuser
 echo -e "iibuser\niibuser" | passwd iibuser
@@ -79,21 +81,16 @@ iptables -I INPUT -p tcp --dport 4414 -j ACCEPT
 iptables -I INPUT -p tcp --dport 7800 -j ACCEPT
 iptables -I INPUT -p tcp --dport 1414 -j ACCEPT
 
-#For IIB Service
-#cp /iibdata/mq-scripts/iibservice /etc/init.d/iibservice
-#cp mq-scripts/iibservice /etc/init.d/iibservice
-#chmod 755 /etc/init.d/iibservice
-
 #Update root .bash_profile
 if [ ! -f "/opt/ibm/rootupdated" ] && [ -d "/root" ]; then
 	touch /opt/ibm/rootupdated
 	if ! `grep -q "LICENSE=accept" /root/.bash_profile`; then
 		echo "Exporting License"; echo export LICENSE=accept>> /root/.bash_profile
 	fi
-	#if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /root/.bash_profile`; then
+	if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /root/.bash_profile`; then
 	#	echo "Updating PATH with iib directories"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /root/.bash_profile
-	#	echo "Updating PATH with mqm directories"; sed -i '/^PATH/s/$/:/opt/ibm/iib-${IIB_VERSION}/server/bin/' /root/.bash_profile
-	#fi
+		echo "Updating PATH with mqm directories"; sed -i '/^PATH/s/$/:\/opt\/ibm\/iib-${IIB_VERSION}\/server\/bin/' /root/.bash_profile
+	fi
 	#if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /root/.bash_profile`; then
 	#	echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /root/.bash_profile
 	#fi
@@ -107,28 +104,6 @@ if [ ! -f "/opt/ibm/rootupdated" ] && [ -d "/root" ]; then
 	#source /root/.bash_profile
 fi
 
-#Update mqm .bash_profile
-if [ ! -f "/opt/ibm/mqmupdated" ] && [ -d "/home/mqm/" ]; then
-	touch /opt/ibm/mqmupdated
-	if ! `grep -q "LICENSE=accept" /home/mqm/.bash_profile`; then
-		echo "Exporting License"; echo export LICENSE=accept>> /home/mqm/.bash_profile
-	fi
-	if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /home/mqm/.bash_profile`; then
-		echo "Updating PATH"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /home/mqm/.bash_profile
-	fi
-	if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /home/mqm/.bash_profile`; then
-		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /home/mqm/.bash_profile
-	fi
-	if ! `grep -q "source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile" /home/mqm/.bash_profile`; then
-		echo "Setting source mqsiprofile"; echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile>> /home/mqm/.bash_profile
-	fi
-	echo "Exporting Path"
-	sed -i '/export PATH/d' /home/mqm/.bash_profile
-	echo export PATH>> /home/mqm/.bash_profile
-	echo "Source /home/mqm/.bash_profile"
-	source /home/mqm/.bash_profile
-fi
-
 #Update iibuser .bash_profile
 if [ ! -f "/opt/ibm/iibuserupdated" ] && [ -d "/home/iibuser/" ]; then
 	touch /opt/ibm/iibuserupdated
@@ -136,10 +111,12 @@ if [ ! -f "/opt/ibm/iibuserupdated" ] && [ -d "/home/iibuser/" ]; then
 		echo "Exporting License"; echo export LICENSE=accept>> /home/iibuser/.bash_profile
 	fi
 	if ! `grep -q ":/opt/mqm/bin:/opt/mqm/samp/bin" /home/iibuser/.bash_profile`; then
-		echo "Updating PATH"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin>> /home/iibuser/.bash_profile
+	#	echo "Updating PATH with mqm directories"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin>> /home/iibuser/.bash_profile
+		echo "Updating PATH with mqm directories"; sed -i '/^PATH/s/$/:\/opt\/mqm\/bin:\/opt\/mqm\/samp\/bin/' /home/iibuser/.bash_profile
 	fi
 	if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /home/iibuser/.bash_profile`; then
-		echo "Updating PATH"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /home/iibuser/.bash_profile
+	#	echo "Updating PATH with iib directories"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /home/iibuser/.bash_profile
+		echo "Updating PATH with mqm directories"; sed -i '/^PATH/s/$/:\/opt\/ibm\/iib-${IIB_VERSION}\/server\/bin/' /home/iibuser/.bash_profile
 	fi
 	if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /home/iibuser/.bash_profile`; then
 		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /home/iibuser/.bash_profile
@@ -150,9 +127,56 @@ if [ ! -f "/opt/ibm/iibuserupdated" ] && [ -d "/home/iibuser/" ]; then
 	echo "Exporting Path"
 	sed -i '/export PATH/d' /home/iibuser/.bash_profile
 	echo export PATH>> /home/iibuser/.bash_profile
-	echo "Source /home/iibuser/.bash_profile"
-	source /home/iibuser/.bash_profile
+	#echo "Source /home/iibuser/.bash_profile"
+	#source /home/iibuser/.bash_profile
 fi
+
+#Update mqm .bash_profile
+#if [ ! -f "/opt/ibm/mqmupdated" ] && [ -d "/home/mqm/" ]; then
+#	touch /opt/ibm/mqmupdated
+#	if ! `grep -q "LICENSE=accept" /home/mqm/.bash_profile`; then
+#		echo "Exporting License"; echo export LICENSE=accept>> /home/mqm/.bash_profile
+#	fi
+#	if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /home/mqm/.bash_profile`; then
+#		echo "Updating PATH"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /home/mqm/.bash_profile
+#	fi
+#	if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /home/mqm/.bash_profile`; then
+#		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /home/mqm/.bash_profile
+#	fi
+#	if ! `grep -q "source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile" /home/mqm/.bash_profile`; then
+#		echo "Setting source mqsiprofile"; echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile>> /home/mqm/.bash_profile
+#	fi
+#	echo "Exporting Path"
+#	sed -i '/export PATH/d' /home/mqm/.bash_profile
+#	echo export PATH>> /home/mqm/.bash_profile
+#	echo "Source /home/mqm/.bash_profile"
+#	source /home/mqm/.bash_profile
+#fi
+
+#Update iibuser .bash_profile
+#if [ ! -f "/opt/ibm/iibuserupdated" ] && [ -d "/home/iibuser/" ]; then
+#	touch /opt/ibm/iibuserupdated
+#	if ! `grep -q "LICENSE=accept" /home/iibuser/.bash_profile`; then
+#		echo "Exporting License"; echo export LICENSE=accept>> /home/iibuser/.bash_profile
+#	fi
+#	if ! `grep -q ":/opt/mqm/bin:/opt/mqm/samp/bin" /home/iibuser/.bash_profile`; then
+#		echo "Updating PATH"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin>> /home/iibuser/.bash_profile
+#	fi
+#	if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /home/iibuser/.bash_profile`; then
+#		echo "Updating PATH"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /home/iibuser/.bash_profile
+#	fi
+#	if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /home/iibuser/.bash_profile`; then
+#		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /home/iibuser/.bash_profile
+#	fi
+#	if ! `grep -q "source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile" /home/iibuser/.bash_profile`; then
+#		echo "Setting source mqsiprofile"; echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile>> /home/iibuser/.bash_profile
+#	fi
+#	echo "Exporting Path"
+#	sed -i '/export PATH/d' /home/iibuser/.bash_profile
+#	echo export PATH>> /home/iibuser/.bash_profile
+#	echo "Source /home/iibuser/.bash_profile"
+#	source /home/iibuser/.bash_profile
+#fi
 
 #Run as mqm
 #runuser -l mqm -c "mqsiservice -v"
@@ -165,8 +189,8 @@ fi
 #/opt/ibm/iib-${IIB_VERSION}/iib verify all
 
 # Set entrypoint to run management script to verify the installation
-iib_manage.sh
-sleep 10
+#iib_manage.sh
+#sleep 10
 
 #Cleanup IIBV10NODE1 and QM1
 #mqsistop IIBV10NODE

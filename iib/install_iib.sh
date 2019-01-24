@@ -48,9 +48,6 @@ export LICENSE=accept
 #Verify the Installation Version
 /opt/ibm/iib-${IIB_VERSION}/iib version
 
-#Setup the Environment for the User
-source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile
-
 # Clean up all the downloaded files
 rm -rf ${DIR_EXTRACT}
 rm -f /tmp/iib-*
