@@ -71,17 +71,17 @@ chmod -R 755 /home/mqm
 if [ ! -f "/opt/mqm/mqmupdated" ] && [ -d "/home/mqm/" ]; then
 	touch /opt/mqm/mqmupdated
 	if ! `grep -q "LICENSE=accept" /home/mqm/.bash_profile`; then
-		echo "Exporting License"; echo export LICENSE=accept >> /home/mqm/.bash_profile
+		echo "Exporting License"; echo export LICENSE=accept>> /home/mqm/.bash_profile
 	fi
 	if ! `grep -q ":/opt/mqm/bin:/opt/mqm/samp/bin" /home/mqm/.bash_profile`; then
-		echo "Updating PATH"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin >> /home/mqm/.bash_profile
+		echo "Updating PATH"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin>> /home/mqm/.bash_profile
 	fi
 	if ! `grep -q "source /opt/mqm/bin/setmqenv" /home/mqm/.bash_profile`; then
-		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s" >> /home/mqm/.bash_profile
+		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /home/mqm/.bash_profile
 	fi
 	echo "Exporting Path"
 	sed -i '/export PATH/d' /home/mqm/.bash_profile
-	echo export PATH >> /home/mqm/.bash_profile
+	echo export $PATH>> /home/mqm/.bash_profile
 	echo "Source /home/mqm/.bash_profile"
 	source /home/mqm/.bash_profile
 fi
@@ -90,17 +90,17 @@ fi
 if [ ! -f "/opt/mqm/rootupdated" ] && [ -d "/root/" ]; then
 	touch /opt/mqm/rootupdated
 	if ! `grep -q "LICENSE=accept" /root/.bash_profile`; then
-		echo "Exporting License"; echo export LICENSE=accept >> /root/.bash_profile
+		echo "Exporting License"; echo export LICENSE=accept>> /root/.bash_profile
 	fi
 	if ! `grep -q ":/opt/mqm/bin:/opt/mqm/samp/bin" /root/.bash_profile`; then
-		echo "Updating PATH"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin >> /root/.bash_profile
+		echo "Updating PATH"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin>> /root/.bash_profile
 	fi
 	if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /root/.bash_profile`; then
-		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s" >> /root/.bash_profile
+		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /root/.bash_profile
 	fi
 	echo "Exporting Path"
 	sed -i '/export PATH/d' /root/.bash_profile
-	echo export PATH >> /root/.bash_profile
+	echo export $PATH>> /root/.bash_profile
 	echo "Source /root/.bash_profile"
 	source /root/.bash_profile
 fi

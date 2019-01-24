@@ -2,7 +2,7 @@
 # Configure process for IIB
 echo " "
 echo "==================================="
-echo "IConfiguring IIB"
+echo "Configuring IIB"
 echo "==================================="
 echo " "
 
@@ -84,20 +84,20 @@ iptables -I INPUT -p tcp --dport 1414 -j ACCEPT
 if [ ! -f "/opt/ibm/rootupdated" ] && [ -d "/root" ]; then
 	touch /opt/ibm/rootupdated
 	if ! `grep -q "LICENSE=accept" /root/.bash_profile`; then
-		echo "Exporting License"; echo export LICENSE=accept >> /root/.bash_profile
+		echo "Exporting License"; echo export LICENSE=accept>> /root/.bash_profile
 	fi
 	if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /root/.bash_profile`; then
-		echo "Updating PATH"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin >> /root/.bash_profile
+		echo "Updating PATH"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /root/.bash_profile
 	fi
 	if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /root/.bash_profile`; then
-		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s" >> /root/.bash_profile
+		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /root/.bash_profile
 	fi
 	if ! `grep -q "source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile" /root/.bash_profile`; then
-		echo "Setting source mqsiprofile"; echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile >> /root/.bash_profile
+		echo "Setting source mqsiprofile"; echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile>> /root/.bash_profile
 	fi
 	echo "Exporting Path"
 	sed -i '/export PATH/d' /root/.bash_profile
-	echo export PATH >> /root/.bash_profile
+	echo export $PATH>> /root/.bash_profile
 	echo "Source /root/.bash_profile"
 	source /root/.bash_profile
 fi
@@ -107,17 +107,17 @@ if [ ! -f "/opt/ibm/mqmupdated" ] && [ -d "/home/mqm/" ]; then
 	touch /opt/ibm/mqmupdated
 	#echo export LICENSE=accept >> /home/mqm/.bash_profile
 	if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /home/mqm/.bash_profile`; then
-		echo "Updating PATH"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin >> /home/mqm/.bash_profile
+		echo "Updating PATH"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /home/mqm/.bash_profile
 	fi
 	if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /home/mqm/.bash_profile`; then
-		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s" >> /home/mqm/.bash_profile
+		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /home/mqm/.bash_profile
 	fi
 	if ! `grep -q "source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile" /home/mqm/.bash_profile`; then
-		echo "Setting source mqsiprofile"; echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile >> /home/mqm/.bash_profile
+		echo "Setting source mqsiprofile"; echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile>> /home/mqm/.bash_profile
 	fi
 	echo "Exporting Path"
 	sed -i '/export PATH/d' /home/mqm/.bash_profile
-	echo export PATH >> /home/mqm/.bash_profile
+	echo export $PATH>> /home/mqm/.bash_profile
 	echo "Source /home/mqm/.bash_profile"
 	source /home/mqm/.bash_profile
 fi
@@ -126,23 +126,23 @@ fi
 if [ ! -f "/opt/ibm/iibuserupdated" ] && [ -d "/home/iibuser/" ]; then
 	touch /opt/ibm/iibuserupdated
 	if ! `grep -q "LICENSE=accept" /home/iibuser/.bash_profile`; then
-		echo "Exporting License"; echo export LICENSE=accept >> /home/iibuser/.bash_profile
+		echo "Exporting License"; echo export LICENSE=accept>> /home/iibuser/.bash_profile
 	fi
 	if ! `grep -q ":/opt/mqm/bin:/opt/mqm/samp/bin" /home/iibuser/.bash_profile`; then
-		echo "Updating PATH"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin >> /home/iibuser/.bash_profile
+		echo "Updating PATH"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin>> /home/iibuser/.bash_profile
 	fi
 	if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /home/iibuser/.bash_profile`; then
-		echo "Updating PATH"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin >> /home/iibuser/.bash_profile
+		echo "Updating PATH"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /home/iibuser/.bash_profile
 	fi
 	if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /home/iibuser/.bash_profile`; then
-		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s" >> /home/iibuser/.bash_profile
+		echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /home/iibuser/.bash_profile
 	fi
 	if ! `grep -q "source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile" /home/iibuser/.bash_profile`; then
-		echo "Setting source mqsiprofile"; echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile >> /home/iibuser/.bash_profile
+		echo "Setting source mqsiprofile"; echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile>> /home/iibuser/.bash_profile
 	fi
 	echo "Exporting Path"
 	sed -i '/export PATH/d' /home/iibuser/.bash_profile
-	echo export PATH >> /home/iibuser/.bash_profile
+	echo export $PATH>> /home/iibuser/.bash_profile
 	echo "Source /home/iibuser/.bash_profile"
 	source /home/iibuser/.bash_profile
 fi

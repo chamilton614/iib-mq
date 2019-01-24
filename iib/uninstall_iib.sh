@@ -53,7 +53,7 @@ rm -rf /var/mqsi
 #rm -rf /var/run/syslogd.pid
 
 # Kill the rsyslogd process
-kill $(cat /var/run/syslogd.pid | awk '{ print $1 }')
+sudo kill $(cat /var/run/syslogd.pid | awk '{ print $1 }')
 
 iptables -P INPUT ACCEPT
 iptables -P FORWARD ACCEPT
