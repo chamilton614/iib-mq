@@ -7,7 +7,7 @@ echo "==================================="
 echo " "
 
 #DEBUG flag
-DEBUG=true
+DEBUG=false
 
 #Get Current Scripts Directory
 CPWD=`pwd`

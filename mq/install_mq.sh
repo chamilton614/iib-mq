@@ -94,26 +94,23 @@ find /opt/mqm/ -name '*.tar.gz' -delete
 #chmod -R 755 /home/mqm
 
 # Remove the directory structure under /var/mqm which was created by the installer
-rm -rf /var/mqm
+#rm -rf /var/mqm
+
+#Update /var/mqm
+#mkdir -p /var/mqm/
+chown -R mqm:mqm /var/mqm/
+chmod -R 755 /var/mqm/
 
 # Create the mount point for volumes
-mkdir -p /mnt/mqm
+#mkdir -p /mnt/mqm
 
 # Create the directory for MQ configuration files
 mkdir -p /etc/mqm
+chown -R mqm:mqm /etc/mqm/
+chmod -R 755 /etc/mqm/
 
 # Create a symlink for /var/mqm -> /mnt/mqm/data
-ln -s /mnt/mqm/data /var/mqm
-
-#Create /var/mqm
-#mkdir -p /var/mqm/
-#chown -R mqm:mqm /var/mqm/
-#chmod -R 755 /var/mqm/
-
-#Create /etc/mqm/
-#mkdir -p /etc/mqm/
-#chown -R mqm:mqm /etc/mqm/
-#chmod -R 755 /etc/mqm/
+#ln -s /mnt/mqm/data /var/mqm
 
 #Setup the Environment for the User
 source /opt/mqm/bin/setmqenv -s
@@ -154,6 +151,10 @@ if [ ! -f "/opt/mqm/rootupdated" ] && [ -d "/root/" ]; then
 		echo "Setting LICENSE variable to .bash_profile"; echo export LICENSE=accept>> /root/.bash_profile
 	fi
 	#sed -i '/^PATH/s/$/<stuff to add>/' <FILE>
+	if ! `grep -q ":/usr/local/bin" /root/.bash_profile`; then
+	#	echo "Updating PATH with /usr/local/bin"; echo PATH='$PATH':/usr/local/bin>> /root/.bash_profile
+		echo "Updating PATH with /usr/local/bin"; sed -i '/^PATH/s/$/:\/usr\/local\/bin/' /root/.bash_profile
+	fi
 	if ! `grep -q ":/opt/mqm/bin:/opt/mqm/samp/bin" /root/.bash_profile`; then
 	#	echo "Updating PATH with mqm directories"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin>> /root/.bash_profile
 		echo "Updating PATH with mqm directories"; sed -i '/^PATH/s/$/:\/opt\/mqm\/bin:\/opt\/mqm\/samp\/bin/' /root/.bash_profile

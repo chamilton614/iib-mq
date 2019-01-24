@@ -94,6 +94,10 @@ if [ ! -f "/opt/ibm/rootupdated" ] && [ -d "/root" ]; then
 	if ! `grep -q "LICENSE=accept" /root/.bash_profile`; then
 		echo "Adding LICENSE variable for root user"; echo export LICENSE=accept>> /root/.bash_profile
 	fi
+	if ! `grep -q ":/usr/local/bin" /root/.bash_profile`; then
+	#	echo "Updating PATH with /usr/local/bin"; echo PATH='$PATH':/usr/local/bin>> /root/.bash_profile
+		echo "Updating PATH with /usr/local/bin"; sed -i '/^PATH/s/$/:\/usr\/local\/bin/' /root/.bash_profile
+	fi
 	if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /root/.bash_profile`; then
 	#	echo "Updating PATH with iib directories"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /root/.bash_profile
 		echo "Updating PATH with mqm directories for root user"; sed -i '/^PATH/s/$/:\/opt\/ibm\/iib-${IIB_VERSION}\/server\/bin/' /root/.bash_profile
