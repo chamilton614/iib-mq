@@ -26,6 +26,7 @@ dltmqm QM1
 
 #Kill User Processes
 killall -9 -u iibuser
+killall -o -u iibmquser
 #killall -9 -u mqm
 
 #Remove Users
@@ -46,6 +47,7 @@ sed -i "s/:\/opt\/ibm\/iib-${IIB_VERSION}\/server\/bin//g" /root/.bash_profile
 sed -i '/source \/opt\/mqm\/bin\/setmqenv -s/d' /root/.bash_profile
 sed -i '/source \/opt\/ibm\/iib-/d' /root/.bash_profile
 
+rm -rf /home/iibmquser
 rm -rf /opt/ibm
 rm -f /var/log/syslog
 rm -rf /var/mqsi

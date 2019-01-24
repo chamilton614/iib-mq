@@ -22,7 +22,7 @@ IIB_VERSION=10.0.0.15
 if [ ! `cat /etc/passwd | grep iibuser` ]; then
    echo "Creating iibuser User"
    #useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo,mqm,mqclient iibuser
-   useradd iibuser -g iibuser --home-dir /home/iibuser
+   useradd iibuser --create-home --home-dir /home/iibuser
    #Set iibuser
    echo -e "iibuser\niibuser" | passwd iibuser
    # Create Groups and Memberships
