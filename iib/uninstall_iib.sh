@@ -38,7 +38,7 @@ gpasswd -d root mqclient
 
 #Remove Groups
 groupdel mqbrkrs
-groupdel mqclient
+groupdel iibuser
 
 echo "Cleaning .bash_profile"
 sed -i '/export LICENSE=accept/d' /root/.bash_profile
