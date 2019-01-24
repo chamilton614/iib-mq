@@ -27,10 +27,10 @@ fi
 
 #Uninstall MQ
 if [ -e "${CPWD}/mq/uninstall_mq.sh" ]; then
-	${CPWD}/mq/uninstall_mq.sh 2>&1 | tee ${CPWD}/logs/uninstall_iib.log
+	${CPWD}/mq/uninstall_mq.sh 2>&1 | tee ${CPWD}/logs/uninstall_mq.log
 else
 	if [ -e "${CPWD}/uninstall_mq.sh" ]; then
-		${CPWD}/uninstall_mq.sh 2>&1 | tee ${CPWD}/logs/uninstall_iib.log
+		${CPWD}/uninstall_mq.sh 2>&1 | tee ${CPWD}/logs/uninstall_mq.log
 	else
 		echo "Unable to locate uninstall_mq.sh in the path ${CPWD}"
 		exit 1

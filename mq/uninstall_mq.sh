@@ -48,5 +48,5 @@ rm -rf /home/mqm
 rm -rf /opt/mqm
 rm -rf /var/mqm
 rm -rf /tmp/mq
-rm -rf /etc/mqm/mq-config
+rm -rf /etc/mqm
 #rm -rf /etc/init.d/iibservice
