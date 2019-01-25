@@ -36,9 +36,9 @@ yum -y install \
   util-linux
 
 # Download and extract the MQ installation files
-echo "exporting DIR_EXTRACT=/tmp/mq"
-export DIR_EXTRACT=/tmp/mq
-mkdir -p /tmp/mq/
+echo "exporting DIR_EXTRACT=/tmp/mqm"
+export DIR_EXTRACT=/tmp/mqm
+mkdir -p /tmp/mqm/
 #cd /tmp/mq
 
 MQ_FILE=mqadv_dev911_linux_x86-64.tar.gz

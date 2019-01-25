@@ -47,6 +47,10 @@ sed -i "s/:\/opt\/ibm\/iib-.*\/server\/bin//g" /root/.bash_profile
 sed -i '/source \/opt\/mqm\/bin\/setmqenv -s/d' /root/.bash_profile
 sed -i '/source \/opt\/ibm\/iib-/d' /root/.bash_profile
 
+# Clean up all the downloaded files
+rm -rf /tmp/iib/
+rm -f /tmp/iib-*
+
 rm -rf /home/iibmquser
 rm -rf /opt/ibm
 rm -f /var/log/syslog

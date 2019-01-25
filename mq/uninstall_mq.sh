@@ -44,6 +44,10 @@ sed -i 's/:\/opt\/mqm\/bin:\/opt\/mqm\/samp\/bin//g' /root/.bash_profile
 #Remove MQ Packages
 rpm -qa | grep MQSeries | xargs rpm -ev 2>&1 > /dev/null
 
+# Clean up all the downloaded files
+rm -rf /tmp/mqm/
+rm -f /tmp/mqconfig*
+
 rm -rf /home/mqm
 rm -rf /opt/mqm
 rm -rf /var/mqm
