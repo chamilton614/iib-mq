@@ -23,7 +23,7 @@ CPWD=`pwd`
 #dltmqm QM1
 
 #Kill User Processes
-killall -9 -u mqm
+killall -u mqm
 
 #Remove Users
 userdel --remove mqm

@@ -25,8 +25,8 @@ mqsideletebroker IIBV10NODE
 dltmqm QM1
 
 #Kill User Processes
-killall -9 -u iibuser
-killall -o -u iibmquser
+killall -u iibuser
+killall -u iibmquser
 #killall -9 -u mqm
 
 #Remove Users
