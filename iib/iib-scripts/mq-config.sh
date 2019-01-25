@@ -14,7 +14,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+echo "mq-config.sh"
 set -e
 
 configure_os_user()
@@ -41,11 +41,14 @@ configure_os_user()
 }
 
 # Set default unless it is set
-MQ_APP_NAME="iibmquser"
-MQ_APP_PASSWORD=${MQ_APP_PASSWORD:-""}
+#MQ_APP_NAME="iibmquser"
+MQ_APP_NAME="iibuser"
+#MQ_APP_PASSWORD=${MQ_APP_PASSWORD:-""}
+MQ_APP_PASSWORD=iibuser
 
 echo "Configuring mq app user (iibmquser)"
-configure_os_user mqclient MQ_APP_NAME MQ_APP_PASSWORD /home/iibmquser
+#configure_os_user mqclient MQ_APP_NAME MQ_APP_PASSWORD /home/iibmquser
+configure_os_user mqclient MQ_APP_NAME MQ_APP_PASSWORD /home/iibuser
 
 echo "Configuring default objects for queue manager: ${MQ_QMGR_NAME}"
 set +e

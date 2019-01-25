@@ -5,6 +5,7 @@
 # are made available under the terms of the Eclipse Public License v1.0
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
+echo "license-check.sh"
 
 if [ "$LICENSE" = "accept" ]; then
 	exit 0
@@ -31,7 +32,7 @@ elif [ "$LICENSE" = "view" ]; then
 		*) LICENSE_FILE=English.txt ;;
 	esac
 	#cat /opt/ibm/iib-10.0.0.11/license/$LICENSE_FILE
-	cat /opt/ibm/iib-10.0.0.15/license/$LICENSE_FILE
+	cat /opt/ibm/iib-${MQSI_VERSION}/license/$LICENSE_FILE
         cat /opt/mqm/licenses/$LICENSE_FILE
 	exit 1
 else

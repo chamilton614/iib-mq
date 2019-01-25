@@ -18,6 +18,7 @@
 # Then we check whether /var/mqm is a symlink. If it is we don't do anything
 # If /var/mqm does not exist then we try to find the default Bluemix mount and
 # mount it. Otherwise we give up and just create /var/mqm
+echo "setup-var-mqm.sh"
 if [ -d "/var/mqm/qmgrs" ]; then
   # User is probably following old instructions to mount a volume into /var/mqm
   echo "Using existing MQ Data under /var/mqm"

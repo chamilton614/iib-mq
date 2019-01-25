@@ -58,7 +58,7 @@ tar -zxvf ${DIR_EXTRACT}/${MQ_FILE} -C ${DIR_EXTRACT}/ 2>&1 > /dev/null
 
 # Recommended: Create the mqm user ID with a fixed UID and group, so that the file permissions work between different images
 groupadd --system --gid 980 mqm
-useradd --system --uid 980 --gid mqm mqm
+useradd --system --uid 980 --gid mqm --create-home --home-dir /home/mqm mqm
 usermod -aG mqm root
 
 #MQ Packages to Install
@@ -86,20 +86,24 @@ yum -y update
 find /opt/mqm/ -name '*.tar.gz' -delete
 
 # Recommended: Set the default MQ installation (makes the MQ commands available on the PATH)
-/opt/mqm/bin/setmqinst -p /opt/mqm/ -i
+/opt/mqm/bin/setmqinst -i -p /opt/mqm/
 
 # Create Home directory for .bash_profile
 #mkdir -p /home/mqm
 #chown -R mqm:mqm /home/mqm
 #chmod -R 755 /home/mqm
 
+#Update /opt/mqm
+#chown -R mqm:mqm /opt/mqm
+#chmod -R 755 /opt/mqm
+
 # Remove the directory structure under /var/mqm which was created by the installer
 #rm -rf /var/mqm
 
 #Update /var/mqm
 #mkdir -p /var/mqm/
-chown -R mqm:mqm /var/mqm/
-chmod -R 755 /var/mqm/
+#chown -R mqm:mqm /var/mqm/
+#chmod -R 755 /var/mqm/
 
 # Create the mount point for volumes
 #mkdir -p /mnt/mqm

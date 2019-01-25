@@ -5,7 +5,7 @@
 # are made available under the terms of the Eclipse Public License v1.0
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
-
+echo "mq_start.sh"
 set -e
 
 MQ_QMGR_NAME=${MQ_QMGR_NAME-QM1}
@@ -32,7 +32,7 @@ start_mq()
           echo "----------------------------------------"
           echo "Creating iib queues"
           #/opt/ibm/iib-10.0.0.11/server/sample/wmq/iib_createqueues.sh $MQ_QMGR_NAME mqbrkrs
-		  /opt/ibm/iib-10.0.0.15/server/sample/wmq/iib_createqueues.sh $MQ_QMGR_NAME mqbrkrs
+		  /opt/ibm/iib-${MQSI_VERSION}/server/sample/wmq/iib_createqueues.sh $MQ_QMGR_NAME mqbrkrs
           echo "----------------------------------------"
           echo "Configuring queue manager $MQ_QMGR_NAME"
           source mq-config.sh

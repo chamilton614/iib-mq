@@ -81,7 +81,10 @@ else
 fi
 
 # Set BASH_ENV to source mqsiprofile when using docker exec bash -c
-export BASH_ENV=/usr/local/bin/iib_env.sh MQSI_MQTT_LOCAL_HOSTNAME=127.0.0.1 MQSI_DONT_RUN_LISTENER=true LANG=en_US.UTF-8
+export BASH_ENV=/usr/local/bin/iib_env.sh
+export MQSI_MQTT_LOCAL_HOSTNAME=127.0.0.1
+export MQSI_DONT_RUN_LISTENER=true
+export LANG=en_US.UTF-8
 
 # Expose default admin port and http ports
 iptables -I INPUT -p tcp --dport 4414 -j ACCEPT
