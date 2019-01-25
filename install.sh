@@ -38,7 +38,8 @@ else
 fi
 
 echo " "
-echo "========================================="
+echo "============================================================"
 echo "Install of IIB and MQ has been completed"
-echo "========================================="
+echo "Log out and Log back in for profile settings to take affect"
+echo "============================================================"
 echo " "

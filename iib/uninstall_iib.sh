@@ -91,4 +91,10 @@ do
  rm -rf /usr/local/bin/$f
 done
 
+echo " "
+echo "============================================================"
+echo "Uninstall of IIB has been completed"
+echo "Log out and Log back in for profile settings to take affect"
+echo "============================================================"
+echo " "
 

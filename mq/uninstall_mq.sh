@@ -54,3 +54,10 @@ rm -rf /var/mqm
 rm -rf /tmp/mq
 rm -rf /etc/mqm
 #rm -rf /etc/init.d/iibservice
+
+echo " "
+echo "============================================================"
+echo "Uninstall of MQ has been completed"
+echo "Log out and Log back in for profile settings to take affect"
+echo "============================================================"
+echo " "

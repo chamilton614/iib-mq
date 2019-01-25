@@ -177,7 +177,9 @@ source /root/.bash_profile
 # Start IIB and MQ as iibuser
 #runuser -l iibuser -c "iib_manage.sh"
 
-
-
-
-
+echo " "
+echo "============================================================"
+echo "Install of IIB has been completed"
+echo "Log out and Log back in for profile settings to take affect"
+echo "============================================================"
+echo " "
