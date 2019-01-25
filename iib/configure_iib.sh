@@ -98,18 +98,16 @@ if [ ! -f "/opt/ibm/rootupdated" ] && [ -d "/root" ]; then
 		echo "Adding LICENSE variable for root user"; echo export LICENSE=accept>> /root/.bash_profile
 	fi
 	if ! `grep -q ":/usr/local/bin" /root/.bash_profile`; then
-	#	echo "Updating PATH with /usr/local/bin"; echo PATH='$PATH':/usr/local/bin>> /root/.bash_profile
-		echo "Updating PATH with /usr/local/bin"; sed -i '/^PATH/s/$/:\/usr\/local\/bin/' /root/.bash_profile
+		echo "Updating PATH variable for root user"; sed -i '/^PATH/s/$/:\/usr\/local\/bin/' /root/.bash_profile
 	fi
 	if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /root/.bash_profile`; then
-	#	echo "Updating PATH with iib directories"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /root/.bash_profile
-		echo "Updating PATH with mqm directories for root user"; sed -i '/^PATH/s/$/:\/opt\/ibm\/iib-${IIB_VERSION}\/server\/bin/' /root/.bash_profile
+		echo "Updating PATH with iib directories for root user"; sed -i '/^PATH/s/$/:\/opt\/ibm\/iib-${IIB_VERSION}\/server\/bin/' /root/.bash_profile
 	fi
-	#if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /root/.bash_profile`; then
-	#	echo "Setting source setmqenv for root user"; echo "source /opt/mqm/bin/setmqenv -s">> /root/.bash_profile
-	#fi
+	if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /root/.bash_profile`; then
+		echo "Setting source setmqenv for root user"; echo "source /opt/mqm/bin/setmqenv -s">> /root/.bash_profile
+	fi
 	if ! `grep -q "source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile" /root/.bash_profile`; then
-		echo "Setting source mqsiprofile for root user"; echo source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile>> /root/.bash_profile
+		echo "Setting source mqsiprofile for root user"; echo "source /opt/ibm/iib-${IIB_VERSION}/server/bin/mqsiprofile">> /root/.bash_profile
 	fi
 	echo "Moving export PATH for root user"
 	sed -i '/export PATH/d' /root/.bash_profile
