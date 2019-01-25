@@ -83,7 +83,7 @@ fi
 # Set BASH_ENV to source mqsiprofile when using docker exec bash -c
 export BASH_ENV=/usr/local/bin/iib_env.sh
 export MQSI_MQTT_LOCAL_HOSTNAME=127.0.0.1
-export MQSI_DONT_RUN_LISTENER=true
+#export MQSI_DONT_RUN_LISTENER=true
 export LANG=en_US.UTF-8
 
 # Expose default admin port and http ports
@@ -99,6 +99,9 @@ if [ ! -f "/opt/ibm/rootupdated" ] && [ -d "/root" ]; then
 	fi
 	if ! `grep -q ":/usr/local/bin" /root/.bash_profile`; then
 		echo "Updating PATH variable for root user"; sed -i '/^PATH/s/$/:\/usr\/local\/bin/' /root/.bash_profile
+	fi
+	if ! `grep -q ":/opt/mqm/bin:/opt/mqm/samp/bin" /root/.bash_profile`; then
+		echo "Updating PATH with mqm directories"; sed -i '/^PATH/s/$/:\/opt\/mqm\/bin:\/opt\/mqm\/samp\/bin/' /root/.bash_profile
 	fi
 	if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /root/.bash_profile`; then
 		echo "Updating PATH with iib directories for root user"; sed -i '/^PATH/s/$/:\/opt\/ibm\/iib-${IIB_VERSION}\/server\/bin/' /root/.bash_profile
@@ -122,16 +125,13 @@ if [ ! -f "/opt/ibm/iibuserupdated" ] && [ -d "/home/iibuser/" ]; then
 	if ! `grep -q "LICENSE=accept" /home/iibuser/.bash_profile`; then
 		echo "Adding LICENSE variable for iibuser user"; echo export LICENSE=accept>> /home/iibuser/.bash_profile
 	fi
-	if ! `grep -q ":/usr/local/bin" /root/.bash_profile`; then
-	#	echo "Updating PATH with /usr/local/bin"; echo PATH='$PATH':/usr/local/bin>> /root/.bash_profile
-		echo "Updating PATH with /usr/local/bin"; sed -i '/^PATH/s/$/:\/usr\/local\/bin/' /root/.bash_profile
+	if ! `grep -q ":/usr/local/bin" /home/iibuser/.bash_profile`; then
+		echo "Updating PATH with /usr/local/bin"; sed -i '/^PATH/s/$/:\/usr\/local\/bin/' /home/iibuser/.bash_profile
 	fi
 	if ! `grep -q ":/opt/mqm/bin:/opt/mqm/samp/bin" /home/iibuser/.bash_profile`; then
-	#	echo "Updating PATH with mqm directories"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin>> /home/iibuser/.bash_profile
 		echo "Updating PATH with mqm directories for iibuser user"; sed -i '/^PATH/s/$/:\/opt\/mqm\/bin:\/opt\/mqm\/samp\/bin/' /home/iibuser/.bash_profile
 	fi
 	if ! `grep -q "/opt/ibm/iib-${IIB_VERSION}/server/bin" /home/iibuser/.bash_profile`; then
-	#	echo "Updating PATH with iib directories"; echo PATH='$PATH':/usr/local/bin:/opt/ibm/iib-${IIB_VERSION}/server/bin>> /home/iibuser/.bash_profile
 		echo "Updating PATH with iib directories for iibuser user"; sed -i '/^PATH/s/$/:\/opt\/ibm\/iib-${IIB_VERSION}\/server\/bin/' /home/iibuser/.bash_profile
 	fi
 	if ! `grep -q "source /opt/mqm/bin/setmqenv -s" /home/iibuser/.bash_profile`; then

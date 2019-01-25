@@ -117,36 +117,7 @@ chmod -R 755 /etc/mqm/
 #ln -s /mnt/mqm/data /var/mqm
 
 #Setup the Environment for the User
-source /opt/mqm/bin/setmqenv -s
-
-#Verify the Installation Version
-dspmqver
-
-# Clean up yum files
-yum -y clean all
-rm -rf /var/cache/yum/*
-
-# Clean up all the downloaded files
-rm -rf ${DIR_EXTRACT}
-
-##Update mqm .bash_profile
-#if [ ! -f "/opt/mqm/mqmupdated" ] && [ -d "/home/mqm/" ]; then
-#	touch /opt/mqm/mqmupdated
-#	if ! `grep -q "LICENSE=accept" /home/mqm/.bash_profile`; then
-#		echo "Exporting License"; echo export LICENSE=accept>> /home/mqm/.bash_profile
-#	fi
-#	if ! `grep -q ":/opt/mqm/bin:/opt/mqm/samp/bin" /home/mqm/.bash_profile`; then
-#		echo "Updating PATH"; echo PATH='$PATH':/opt/mqm/bin:/opt/mqm/samp/bin>> /home/mqm/.bash_profile
-#	fi
-#	#if ! `grep -q "source /opt/mqm/bin/setmqenv" /home/mqm/.bash_profile`; then
-#	#	echo "Setting source setmqenv"; echo "source /opt/mqm/bin/setmqenv -s">> /home/mqm/.bash_profile
-#	#fi
-#	echo "Exporting Path"
-#	sed -i '/export PATH/d' /home/mqm/.bash_profile
-#	echo export PATH>> /home/mqm/.bash_profile
-#	echo "Source /home/mqm/.bash_profile"
-#	source /home/mqm/.bash_profile
-#fi
+#source /opt/mqm/bin/setmqenv -s
 
 #Update root .bash_profile
 if [ ! -f "/opt/mqm/rootupdated" ] && [ -d "/root/" ]; then
@@ -192,10 +163,26 @@ if [ ! -f "/opt/mqm/mqmupdated" ] && [ -d "/home/mqm/" ]; then
 	
 	#Moving the export PATH line to be the last line in the .bash_profile
 	echo "Moving export PATH"
-	sed -i '/export PATH/d' /root/.bash_profile
-	echo export PATH>> /root/.bash_profile
-	#echo "Source /root/.bash_profile"
-	#source /root/.bash_profile
+	sed -i '/export PATH/d' /home/mqm/.bash_profile
+	echo export PATH>> /home/mqm/.bash_profile
+	#echo "Source /home/mqm/.bash_profile"
+	#source /home/mqm/.bash_profile
 fi
+
+#Source the root profile to load the necessary variables
+echo "Source /root/.bash_profile"
+source /root/.bash_profile
+
+#Verify the Installation Version
+dspmqver
+
+# Clean up yum files
+yum -y clean all
+rm -rf /var/cache/yum/*
+
+# Clean up all the downloaded files
+rm -rf ${DIR_EXTRACT}
+
+
 
 
