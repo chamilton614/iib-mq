@@ -47,6 +47,10 @@ sed -i "s/:\/opt\/ibm\/iib-.*\/server\/bin//g" /root/.bash_profile
 sed -i '/source \/opt\/mqm\/bin\/setmqenv -s/d' /root/.bash_profile
 sed -i '/source \/opt\/ibm\/iib-/d' /root/.bash_profile
 
+#Source the root profile to load the necessary variables
+echo "Source /root/.bash_profile"
+source /root/.bash_profile
+
 # Clean up all the downloaded files
 rm -rf /tmp/iib/
 rm -f /tmp/iib-*
@@ -94,7 +98,7 @@ done
 echo " "
 echo "============================================================"
 echo "Uninstall of IIB has been completed"
-echo "Log out and Log back in for profile settings to take affect"
+echo "Logout and Login for profile settings to take affect"
 echo "============================================================"
 echo " "
 

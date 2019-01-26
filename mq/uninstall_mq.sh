@@ -41,6 +41,10 @@ sed -i '/export LICENSE=accept/d' /root/.bash_profile
 sed -i '/source \/opt\/mqm\/bin\/setmqenv -s/d' /root/.bash_profile
 sed -i 's/:\/opt\/mqm\/bin:\/opt\/mqm\/samp\/bin//g' /root/.bash_profile
 
+#Source the root profile to load the necessary variables
+echo "Source /root/.bash_profile"
+source /root/.bash_profile
+
 #Remove MQ Packages
 rpm -qa | grep MQSeries | xargs rpm -ev 2>&1 > /dev/null
 
@@ -58,6 +62,6 @@ rm -rf /etc/mqm
 echo " "
 echo "============================================================"
 echo "Uninstall of MQ has been completed"
-echo "Log out and Log back in for profile settings to take affect"
+echo "Logout and Login for profile settings to take affect"
 echo "============================================================"
 echo " "

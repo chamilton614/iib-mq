@@ -40,6 +40,6 @@ fi
 echo " "
 echo "============================================================"
 echo "Install of IIB and MQ has been completed"
-echo "Log out and Log back in for profile settings to take affect"
+echo "Logout and Login for profile settings to take affect"
 echo "============================================================"
 echo " "
