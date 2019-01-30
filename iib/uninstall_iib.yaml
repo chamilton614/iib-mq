@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: nodes
   tasks:
     - name: Uninstall IIB
       script: ./uninstall_iib.sh

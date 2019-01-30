@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: nodes
   tasks:
     - name: Install IIB
       script: ./install_iib.sh

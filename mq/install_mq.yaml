@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: nodes
   tasks:
     - name: Install MQ
       script: ./install_mq.sh

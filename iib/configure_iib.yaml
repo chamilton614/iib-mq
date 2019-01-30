@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: nodes
   tasks:
     - name: Configure IIB
       script: ./configure_iib.sh

@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: nodes
   tasks:
     - name: Uninstall MQ
       script: ./uninstall_mq.sh
