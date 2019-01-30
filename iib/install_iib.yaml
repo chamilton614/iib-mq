@@ -3,4 +3,7 @@
   tasks:
     - name: Install IIB
       script: ./install_iib.sh
+    
+    - name: Configure IIB
+      import_playbook: ./configure_iib.yaml
 
