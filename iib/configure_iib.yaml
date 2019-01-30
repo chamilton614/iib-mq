@@ -1,55 +1,6 @@
 ---
-- name: OpenShift Pre-install
-  import_playbook: ./playbooks/openshift_preinstall.yaml
-
-- name: Execute the openshift-ansible prerequisites
-  import_playbook: /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
-
-- name: Execute the openshift-ansible Deployer
-  import_playbook: /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
-
-- name: OpenShift Post-install
-  import_playbook: ./playbooks/openshift_postinstall.yaml
-
-- name: Smoke Test
-  import_playbook: ./playbooks/smoke_test_install.yaml
-
-- name: Creation of Cluster Admin
-  import_playbook: ./playbooks/cluster_admin_users.yaml
-
-- name: CICD Workflow with Jenkins
-  import_playbook: ./playbooks/cicd_workflow_jenkins.yaml
-
-- name: CICD Workflow for OpenShift-Tasks Projects
-  import_playbook: ./playbooks/cicd_workflow_projects.yaml
-
-- name: HPA configuration on production deployment of openshift-tasks
-  import_playbook: ./playbooks/client_application_hpa.yaml
-
-- name: CICD Workflow Pipeline
-  import_playbook: ./playbooks/cicd_workflow_pipeline.yaml
-  
-- name: Creation of Projects for GWAR (alpha), Hatebreed (beta) and Common clients
-  import_playbook: ./playbooks/client_projects.yaml
-  
-- name: Creation of Users for GWAR (alpha), Hatebreed (beta) and Common clients
-  import_playbook: ./playbooks/client_users.yaml
-
-- name: Creation of Groups for GWAR (alpha), Hatebreed (beta) and Common clients
-  import_playbook: ./playbooks/client_groups.yaml  
-
-#- name: Disable Self-Provisioning for Non-Project Admin and Non-Cluster Admin Users
-#  import_playbook: ./playbooks/disable_self-provisioning.yaml
-
-#- name: Smoke Test Clients
-#  import_playbook: ./playbooks/smoke_test_clients.yaml
-
-
-
-
-  
-  
-  
-  
-  
+- hosts: localhost
+  tasks:
+    - name: Configure IIB
+      script: ./configure_iib.sh
 
