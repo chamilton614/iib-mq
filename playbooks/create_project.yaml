@@ -1,0 +1,11 @@
+---
+- name: Create a New Project
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Create the Project
+      vars:
+        project-name:
+        display:
+        description-info:
+      command: "oc new-project {{ project-name }} --display-name='{{ display }}' --description='{{ description-info }}'"

@@ -1,0 +1,27 @@
+kind: LimitRange
+apiVersion: v1
+metadata:
+  creationTimestamp: null
+  name: project-limits
+spec:
+  limits:
+    - type: Pod
+      max:
+        cpu: "2"
+        memory: "4Gi"
+      min:
+        cpu: "200m"
+        memory: "128Mi"
+    - type: Container
+      min:
+        cpu: "200m"
+        memory: "128Mi"
+      max:
+        cpu: "2"
+        memory: "4Gi"
+      default:
+        cpu: "400m"
+        memory: "512Mi"
+      defaultRequest:
+        cpu: "400m"
+        memory: "512Mi"

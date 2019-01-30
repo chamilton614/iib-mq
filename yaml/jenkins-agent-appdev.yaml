@@ -1,0 +1,52 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewBuild
+  creationTimestamp: 2018-11-27T12:28:50Z
+  labels:
+    build: jenkins-agent-appdev
+  name: jenkins-agent-appdev
+  namespace: cicd-dev
+  resourceVersion: "1042141"
+  selfLink: /apis/build.openshift.io/v1/namespaces/cicd-dev/buildconfigs/jenkins-agent-appdev
+  uid: fe9bd826-f23f-11e8-ae6b-16b9d395346e
+spec:
+  failedBuildsHistoryLimit: 5
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: jenkins-agent-appdev:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    dockerfile: |-
+      FROM docker.io/openshift/jenkins-agent-maven-35-centos7:v3.11
+
+            USER root
+      RUN yum -y install skopeo && yum clean all
+
+            USER 1001
+    type: Dockerfile
+  strategy:
+    dockerStrategy:
+      from:
+        kind: ImageStreamTag
+        name: jenkins-agent-maven-35-centos7:v3.11
+    type: Docker
+  successfulBuildsHistoryLimit: 5
+  triggers:
+  - github:
+      secret: 3tC4Zn-Ia2pqP4zuFRo8
+    type: GitHub
+  - generic:
+      secret: sExvgK-EyNZW4sxqhFKN
+    type: Generic
+  - type: ConfigChange
+  - imageChange:
+      lastTriggeredImageID: docker.io/openshift/jenkins-agent-maven-35-centos7@sha256:18297fa1539fca8a8726323c1a7a0c8136f341d98da62d3566039843b9e87723
+    type: ImageChange
+status:
+  lastVersion: 1

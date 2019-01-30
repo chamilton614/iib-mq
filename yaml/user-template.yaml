@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: custom-user-template
+  annotations:
+    description: Custom User Template for Openshift
+objects:
+- apiVersion: user.openshift.io/v1
+  kind: User
+  groups: null
+  metadata:
+    creationTimestamp: null
+    labels: null
+    name: ${USERNAME}
+    namespace: ""
+  identities:
+  - htpasswd_auth:${USERNAME}
+parameters:
+  - name: USERNAME 
+    description: The Username to add to the Cluster to authenticate and use resources 
+    required: true    

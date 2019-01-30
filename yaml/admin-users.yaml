@@ -1,0 +1,14 @@
+kind: Template
+apiVersion: v1
+metadata:
+  name: admin-users
+objects:
+- apiVersion: user.openshift.io/v1
+  groups: null
+  identities:
+  - htpasswd_auth:admin
+  kind: User
+  metadata:
+    creationTimestamp: null
+    name: admin
+    namespace: ""

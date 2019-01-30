@@ -1,0 +1,120 @@
+---
+- name: Verify OpenShift Cluster
+  hosts: masters[0]
+  tasks:
+    - fetch:
+        src: /root/.kube/config
+        dest: /root/.kube/config
+        flat: yes
+        
+- name: Post installation configuration
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Verify logged in User is system:dmin
+      shell: oc whoami | grep system:admin
+
+- name: Create PVs for Users
+  hosts: nfs
+  tasks:
+    - name: Create PV directories
+      script: ../scripts/create_pvs.sh
+    - name: Restarting NFS Server...
+      shell: systemctl restart nfs-server
+
+- name: Create 25 definitions files for PVs 5G size
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Create ReadWriteOnce PV definitions
+      script: ../scripts/pvs_5Gsize.sh
+
+- name: Create 25 definitions files for PVs 10G size
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Create ReadWriteMany PV definitions
+      script: ../scripts/pvs_10Gsize.sh
+
+- name: Create all PVs from definitions files
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Create all defined PVs
+      shell: cat /root/pvs/* | oc create -f -
+
+- name: Fix NFS Persistent Volume Recycling
+  hosts: nodes
+  tasks:
+    - name: Pull Latest OSE-Recycler Image
+      shell: docker pull registry.access.redhat.com/openshift3/ose-recycler:latest
+    - name: Tag OSE-Recycler Image
+      shell: docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.11.16
+
+- name: Update Default Project
+  hosts: localhost
+  tasks:
+    - name: Label Default Project
+      shell: oc label namespace default name=default
+
+- name: Update Master Config
+  hosts: masters
+  tasks:
+    - name: Update Default Jenkins Pipeline Config
+      blockinfile:
+        dest: /etc/origin/master/master-config.yaml
+        block: |
+          jenkinsPipelineConfig:
+            autoProvisionEnabled: true
+            templateNamespace: openshift
+            templateName: jenkins-persistent
+            serviceName: jenkins
+            parameters:
+        backup: yes
+    
+#    - name: Update Project Request Message
+#      lineinfile:
+#        path: /etc/origin/master/master-config.yaml
+#        regexp: '^ProjectRequestMessage: '
+#        line: 'ProjectRequestMessage: To request a project, contact your system administrator at admin@mitzi.com'
+
+#- name: Disable User Provisioning
+#  hosts: localhost
+#  connection: local
+#  tasks:
+#    - name: Remove Self-Provisioners from OAUTH Group
+#      command: oc patch clusterrolebinding.rbac self-provisioners -p '{"subjects": null}'
+#      
+#    - name: Prevent OpenShift Updates from restoring Self-Provisioners
+#      command: oc patch clusterrolebinding.rbac self-provisioners -p '{ "metadata": { "annotations": { "rbac.authorization.kubernetes.io/autoupdate": "false" } } }'
+
+- name: Restart API and Controllers
+  hosts: masters
+  tasks:
+    - name: Restart master services 
+      command: /usr/local/bin/master-restart "{{ item }}"
+      with_items:
+        - "api"
+        - "controllers"
+      retries: 5
+      delay: 10
+      register: result
+      until: result.rc == 0
+      
+    - name: sleep for 120 seconds
+      wait_for: timeout=120
+      delegate_to: localhost
+
+- name: Create Custom User Template
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Upload Custom User Template to the Openshift Project
+      command: "oc create -f ../yaml/user-template.yaml -n openshift"
+      
+- name: Create Custom Project User Template
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Upload Custom Project User Template to the Openshift Project
+      command: "oc create -f ../yaml/client-user-template.yaml -n openshift"

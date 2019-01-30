@@ -1,0 +1,14 @@
+---
+#This will cause issues for PV Claims using the same "mongo" name
+- name: Smoke Test Client Projects
+  hosts: localhost
+  tasks:
+    - name: Login as Admin
+      command: "oc login -u system:admin"
+      
+    - name: Deploy nodejs-mongo-persistent
+      command: "oc new-app nodejs-mongo-persistent -n {{ item }}"
+      with_items:
+        - gwar-project
+        - hatebreed-project
+        - common-project

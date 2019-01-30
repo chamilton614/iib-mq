@@ -1,0 +1,12 @@
+---
+# Params:
+#        user - user to be added
+#
+- name: Add User to the Cluster
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Add One User to the Cluster
+      vars:
+        user:
+      shell: "oc process custom-user-template -n openshift USERNAME={{ user }} -o yaml | oc create -f -"

@@ -1,0 +1,59 @@
+kind: Template
+apiVersion: v1
+metadata:
+  name: users-template
+objects:
+- kind: User
+  apiVersion: v1
+  metadata:
+    creationTimestamp: null
+    labels:
+      client: gwar
+    name: Amy
+  identities:
+  - htpasswd_auth:Amy
+- kind: User
+  apiVersion: v1
+  metadata:
+    creationTimestamp: null
+    labels:
+      client: gwar
+    name: Andrew
+  identities:
+  - htpasswd_auth:Andrew
+- kind: User
+  apiVersion: v1
+  metadata:
+    creationTimestamp: null
+    labels:
+      client: hatebreed
+    name: Betty
+  identities:
+  - htpasswd_auth:Betty    
+- kind: User
+  apiVersion: v1
+  metadata:
+    creationTimestamp: null
+    labels:
+      client: hatebreed
+    name: Brian
+  identities:
+  - htpasswd_auth:Brian
+- kind: User
+  apiVersion: v1
+  metadata:
+    creationTimestamp: null
+    labels:
+      client: common
+    name: Chuck
+  identities:
+  - htpasswd_auth:Chuck
+- kind: User
+  apiVersion: v1
+  metadata:
+    creationTimestamp: null
+    labels:
+      client: common
+    name: Carl
+  identities:
+  - htpasswd_auth:Carl

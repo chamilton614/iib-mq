@@ -1,0 +1,29 @@
+---
+- name: Jenkins OpenShift plugin is used to create a CICD workflow
+  hosts: localhost
+  tasks:
+    - name: set default jenkins to jenkins-persistent
+      shell: |
+        cat /etc/origin/master/master-config.yaml
+        # BEGIN ANSIBLE MANAGED BLOCK
+        jenkinsPipelineConfig: 
+          autoProvisionEnabled: true 
+          templateNamespace: openshift 
+          templateName: jenkins-persistent 
+          serviceName: jenkins
+          parameters:
+        # END ANSIBLE MANAGED BLOCK
+    - name: create jenkins project
+      shell: oc new-project pipeline
+    - name: create limit range for jenkins project
+      shell: oc create -f jenkins-limits.yaml
+    - name: Jenkins deploys openshift-tasks app
+      shell: |
+      oc new-app -f https://raw.githubusercontent.com/lbroudoux/openshift-tasks/master/app-template.yaml  -n pipeline
+      oc create -f pipeline-dinges.yaml
+    - name: jenkins deploys openshift-tasks app
+      shell: oc start-build pipeline-street -n pipeline
+#    - name: 4. HPA is configured and working on production deployment of openshift-tasks
+#      shell: oc get hpa
+#    - name: 5. Jenkins pod is running with a persistent volume (see above)
+#      shell: oc get pvc

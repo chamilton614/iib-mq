@@ -1,0 +1,24 @@
+---
+- name: Smoke Test Install
+  hosts: localhost
+  tasks:
+    - name: Login as Admin
+      command: "oc login -u system:admin"
+      
+    - name: Smoke Test Project for the Install
+      command: "oc new-project smoke-test"
+
+    - name: Remove the Default Network Policies
+      command: "oc delete networkpolicy {{ item }} -n smoke-test"
+      with_items:
+        - allow-from-default-namespace
+        - allow-from-same-namespace
+        - default-deny-all
+    
+    - name: Remove the Default Limit Range
+      command: "oc delete limitrange project-limits -n smoke-test"
+      
+    - name: Deploy nodejs-mongo-persistent
+      command: "oc new-app nodejs-mongo-persistent -n {{ item }}"
+      with_items:
+        - smoke-test

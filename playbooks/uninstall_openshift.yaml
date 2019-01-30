@@ -1,0 +1,41 @@
+---
+- name: Run the uninstall playbook
+  import_playbook: /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
+  
+- name: Remove leftover content
+  hosts: nodes
+  tasks:
+    - name: Remove /etc/origin
+      command: "rm -rf /etc/origin"
+
+- name: Remove any data from the NFS Server
+  hosts: nfs
+  tasks:
+    - name: Remove /srv/nfs/*
+      command: "rm -rf /srv/nfs/*"
+      
+- name: Remove Localhost Persistent Volume policy files
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Remove /root/pvs
+      command: "rm -rf /root/pvs"
+
+- name: Cleanup Nodes
+  hosts: all
+  tasks:
+    - name: Remove Temp Files
+      command: "rm -rf {{ item }}"
+      with_items:
+        - /root/.ansible/tmp/*
+        - /home/ec2-user/.ansible/tmp/*
+      
+- name: Cleanup Bastion
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Remove Temp Files
+      command: "rm -rf {{ item }}"
+      with_items:
+        - /root/.ansible/tmp/*
+        - /home/ec2-user/.ansible/tmp/*

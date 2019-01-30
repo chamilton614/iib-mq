@@ -1,0 +1,6 @@
+---
+- name: Install MQ
+  import_playbook: ./mq/install_mq.yaml
+
+- name: Install IIB
+  import_playbook: ./iib/install_iib.yaml

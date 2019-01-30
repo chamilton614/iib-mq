@@ -1,0 +1,30 @@
+---
+- name: Create Jenkins Project
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Create CICD-DEV Project
+      command: "oc new-project cicd-dev --display-name='CICD-DEV' --description='Jenkins Project for CICD Workflow'"
+    - name: Label the CICD-DEV Project
+      command: "oc label namespace cicd-dev name=jenkins"
+
+- name: Cleanup Project Defaults
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Remove the Default Network Policies
+      command: "oc delete networkpolicy {{ item }} -n cicd-dev"
+      with_items:
+        - allow-from-default-namespace
+        - allow-from-same-namespace
+        - default-deny-all
+
+    - name: Remove the Default Limit Range
+      command: "oc delete limitrange project-limits -n cicd-dev"   
+
+- name: Create Jenkins Persistent Application
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Deploy Jenkins Persistent
+      command: "oc new-app jenkins-persistent --param ENABLE_OAUTH=true --param MEMORY_LIMIT=2Gi --param VOLUME_CAPACITY=4Gi --param DISABLE_ADMINISTRATIVE_MONITORS=true -n cicd-dev"

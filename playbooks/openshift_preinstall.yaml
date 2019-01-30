@@ -1,0 +1,34 @@
+---
+- name: Generate Inventory Hosts File
+  hosts: localhost
+  tasks:
+    - name: Generate Inventory script
+      script: ../scripts/generate_inventory.sh
+      
+- name: Prepare GUID environment variable across all hosts
+  hosts: all
+  tasks:
+    - name: All GUID env variable
+      shell: export GUID=`hostname | cut -d"." -f2`; echo "export GUID=$GUID" >> $HOME/.bashrc
+
+- name: Verify Installation and Configuration of Docker
+  hosts: nodes
+  tasks:
+    - name: docker restart
+      shell: systemctl restart docker
+
+- name: Verify NFS Shared Volumes on Hosts
+  hosts: nfs
+  tasks:
+    - name: List NFS Shared Volumes
+      shell: exportfs
+
+- name: Install packages and config auth
+  hosts: localhost
+  tasks:
+    - name: required packages are present
+      yum:
+        name:
+          - openshift-ansible
+          - atomic-openshift-clients
+        state: present

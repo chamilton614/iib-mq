@@ -1,0 +1,35 @@
+kind: Template
+apiVersion: v1
+metadata:
+  name: DefaultNetworkPolicies
+objects:
+  - kind: NetworkPolicy
+    apiVersion: networking.k8s.io/v1
+    metadata:
+      name: deny-by-default
+    spec:
+      podSelector:
+      ingress: []
+    
+  - kind: NetworkPolicy
+    apiVersion: networking.k8s.io/v1
+    metadata:
+      name: allow-from-same-namespace
+    spec:
+      podSelector:
+      ingress: 
+      - from:
+          - podSelector: {}
+    
+  - kind: NetworkPolicy
+    apiVersion: networking.k8s.io/v1
+    metadata:
+      name: allow-from-default-namespace
+    spec:
+      podSelector:
+      ingress:
+      - from:
+          - namespaceSelector:
+              matchLabels:
+                  name: default
+    

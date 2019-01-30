@@ -1,0 +1,20 @@
+---
+- name: Configure HPA for Tasks-PROD
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Create Application Limit Range
+      command: "oc create -f ../yaml/app-limit-range.yaml -n tasks-prod"
+
+    - name: Create Autoscaler for Application
+      command: "oc create -f ../yaml/application-hpa.yaml -n tasks-prod"
+      
+    #- name: Create Autoscaler for Application
+    #  command: "oc autoscale dc/tasks --min 1 --max 5 --cpu-percent=80 --name=tasks-hpa -n tasks-prod"
+    
+    #- name: sleep for 120 seconds
+    #  wait_for: timeout=120
+    #  delegate_to: localhost
+    
+    #- name: Rollout a New Deployment of the Application
+    #  command: "oc rollout latest tasks -n tasks-prod"

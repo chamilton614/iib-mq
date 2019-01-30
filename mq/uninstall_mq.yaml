@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Uninstall MQ
+      script: ./uninstall_mq.sh
+

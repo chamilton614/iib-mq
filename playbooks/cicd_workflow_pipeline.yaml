@@ -1,0 +1,14 @@
+---
+- name: Create CICD Workflow Pipeline
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Ansible Galaxy
+      command: "ansible-galaxy install -r ../openshift-tasks/requirements.yml --roles-path=../openshift-tasks/galaxy"
+      
+    - name: Ansible Applier to launch and configure the CICD-DEV Pipeline
+      command: "ansible-playbook -i ../openshift-tasks/.applier/ ../openshift-tasks/galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml"
+           
+    - name: Sleeping for 300 seconds
+      wait_for: timeout=300
+      delegate_to: localhost

@@ -1,0 +1,25 @@
+---
+- name: Create Projects (GWAR, Hatebreed and Common), Users and Groups
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Create the Projects
+      command: "oc new-project {{ item }}"
+      with_items:
+        - gwar-project --display-name='GWAR' --description='Dedicated Node for GWAR'
+        - hatebreed-project --display-name='Hatebreed' --description='Dedicated Node for Hatebreed'
+#        - common-project --display-name='Common' --description='Dedicated Node for Common'
+
+    - name: Label the Projects
+      command: "oc label namespace {{ item }}"
+      with_items:
+        - gwar-project 'client=gwar'
+        - hatebreed-project 'client=hatebreed'
+#        - common-project 'client=common'
+    
+    - name: Annotate the Projects
+      command: "oc annotate namespace {{ item }}"
+      with_items:
+        - gwar-project openshift.io/node-selector='client=gwar'
+        - hatebreed-project openshift.io/node-selector='client=hatebreed'
+#        - common-project openshift.io/node-selector='client=common'

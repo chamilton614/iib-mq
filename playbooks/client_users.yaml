@@ -1,0 +1,40 @@
+---
+# Create Client Users in htpasswd using parameters to another yaml
+- name: Create Client Users in the Directory
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Add Users to htpasswd
+      command: "ansible-playbook htpasswd_user.yaml -e username={{ item }} -e password=r3dh4t1!"
+      with_items:
+        - Amy
+        - Andrew
+        - Betty
+        - Brian
+#        - Chuck
+#        - Carl
+
+- name: Create Client Users in the Cluster
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Add GWAR Users to the Cluster
+      command: "ansible-playbook client_user.yaml -e user={{ item }} -e client=gwar"
+      with_items:
+        - Amy
+        - Andrew
+        
+    - name: Add Hatebreed Users to the Cluster
+      command: "ansible-playbook client_user.yaml -e user={{ item }} -e client=hatebreed"
+      with_items:
+        - Betty
+        - Brian
+        
+#    - name: Add Common Users to the Cluster
+#      command: "ansible-playbook client_user.yaml -e user={{ item }} -e client=common"
+#      with_items:
+#        - Chuck
+#        - Carl
+
+
+

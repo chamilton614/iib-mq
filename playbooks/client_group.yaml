@@ -1,0 +1,10 @@
+---
+- name: Create a New Group with a User in the Cluster
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Create groups for users
+      vars:
+        group:
+        user:
+      command: "oc adm groups new {{ group }} {{ user }}"

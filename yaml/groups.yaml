@@ -1,0 +1,38 @@
+kind: Template
+apiVersion: v1
+metadata:
+  name: groups
+objects:
+- apiVersion: user.openshift.io/v1
+  kind: Group
+  metadata:
+    creationTimestamp: null
+    labels:
+      client: gwar
+    name: gwar-group
+    namespace: ""
+  users:
+  - Andrew
+  - Amy
+- apiVersion: user.openshift.io/v1
+  kind: Group
+  metadata:
+    creationTimestamp: null
+    labels:
+      client: hatebreed
+    name: hatebreed-group
+    namespace: ""
+  users:
+  - Brian
+  - Betty
+- apiVersion: user.openshift.io/v1
+  kind: Group
+  metadata:
+    creationTimestamp: null
+    labels:
+      client: common
+    name: common-group
+    namespace: ""
+  users:
+  - Chuck
+  - Carl

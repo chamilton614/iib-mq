@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: custom-client-user-template
+  annotations:
+    description: Custom Client User Template for Openshift
+objects:
+- apiVersion: user.openshift.io/v1
+  kind: User
+  groups: null
+  metadata:
+    creationTimestamp: null
+    labels:
+      client: ${CLIENT_NAME}
+    name: ${USERNAME}
+    namespace: ""
+  identities:
+  - htpasswd_auth:${USERNAME}
+parameters:
+  - name: USERNAME 
+    description: The Username to add to the Cluster to authenticate and use resources 
+    required: true    
+  - name: CLIENT_NAME
+    description: The Client projects in the Cluster for the user
+    required: true

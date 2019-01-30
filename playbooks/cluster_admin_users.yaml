@@ -1,0 +1,24 @@
+---
+# Create Admin Users in htpasswd using parameters to another yaml
+- name: Create Admin Users in the Directory
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Add Admin User to htpasswd
+      command: "ansible-playbook htpasswd_user.yaml -e username={{ item }} -e password=r3dh4t1!"
+      with_items:
+        - admin
+        
+- name: Create Cluster Admins
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Add Admin User to the Cluster
+      command: "ansible-playbook user.yaml -e user={{ item }}"
+      with_items:
+        - admin
+      
+    - name: Add admin users to Cluster Admin Role
+      command: "oc adm policy add-cluster-role-to-user cluster-admin {{ item }}"
+      with_items:
+        - admin

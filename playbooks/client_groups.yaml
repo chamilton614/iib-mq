@@ -1,0 +1,25 @@
+---
+- name: Create Client Groups in Cluster
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Create groups for users
+      command: "oc adm groups new {{ item }}"
+      with_items:
+        - gwar-group Amy Andrew
+        - hatebreed-group Brian Betty
+#        - common-group Chuck Carl
+    
+    - name: Label groups
+      command: "oc label group/{{ item }}"
+      with_items:
+        - gwar-group client=gwar
+        - hatebreed-group client=hatebreed
+#        - common-group client=common
+        
+    - name: Add policies to groups
+      command: "oc policy add-role-to-group edit {{ item }}"
+      with_items:
+        - gwar-group -n gwar-project
+        - hatebreed-group -n hatebreed-project
+#        - common-group -n common-project
